@@ -1,0 +1,125 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API RESTful - Consulta Tabela FIPE",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/"
+    }
+  ],
+  "paths": {
+    "/marca/": {
+      "get": {
+        "tags": [
+          "Tabela FIPE"
+        ],
+        "summary": "Endpoint para listar marcas de carros",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/modelo/{marca}": {
+      "get": {
+        "tags": [
+          "Tabela FIPE"
+        ],
+        "summary": "Endpoint para listar modelos de uma determinada marca",
+        "description": "",
+        "parameters": [
+          {
+            "name": "marca",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/anos/{marca}/{modelo}": {
+      "get": {
+        "tags": [
+          "Tabela FIPE"
+        ],
+        "summary": "Endpoint para listar o ano de um modelo de uma determinada marca",
+        "description": "",
+        "parameters": [
+          {
+            "name": "marca",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "modelo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/info/{marca}/{modelo}/{ano}": {
+      "get": {
+        "tags": [
+          "Tabela FIPE"
+        ],
+        "summary": "Endpoint para listar informações do ano de um determinado modelo de uma determinada marca",
+        "description": "",
+        "parameters": [
+          {
+            "name": "marca",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "modelo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ano",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
