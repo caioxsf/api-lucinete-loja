@@ -19,4 +19,9 @@ export default class UsuarioController {
         } else
             res.status(400).json({msg: "O corpo da requisição não está adequado!"})
     }
+
+    async ListarUsuarios (req,res) {
+        let usuarios = await this.#repo.ListarUsuarios();
+        res.status(200).json(usuarios)
+    }
 }

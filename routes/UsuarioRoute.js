@@ -10,4 +10,10 @@ router.post('/usuario', (req,res) => {
     ctrl.CadastrarUsuario(req,res)
 });
 
+router.get('/usuario', (req,res) => {
+    // #swagger.tags = ['Usuários']
+    // #swagger.summary = "Endpoint para listar usuários cadastrados"
+    ctrl.ListarUsuarios(req,res)
+});
+
 export default router;

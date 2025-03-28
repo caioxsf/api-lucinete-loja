@@ -32,7 +32,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "nome": {
+                  "usuario": {
                     "example": "any"
                   },
                   "senha": {
@@ -41,6 +41,18 @@
                 }
               }
             }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Endpoint para listar usuários cadastrados",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }

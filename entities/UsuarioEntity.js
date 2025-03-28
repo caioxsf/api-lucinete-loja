@@ -1,4 +1,6 @@
-export default class UsuarioEntity {
+import BaseEntity from "./BaseEntity.js";
+
+export default class UsuarioEntity extends BaseEntity {
 
     #id
     #usuario
@@ -6,6 +8,7 @@ export default class UsuarioEntity {
     #perfil_id
 
     constructor (id,usuario,senha,perfil_id) {
+        super();
         this.#id = id;
         this.#usuario = usuario;
         this.#senha = senha;
