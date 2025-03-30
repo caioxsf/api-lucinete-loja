@@ -21,25 +21,25 @@ export default class inicioRepository {
         let rows = await this.#banco.ExecutaComando(sql);
 
         let lista = [];
-        for(let i=0; i<rows.length; i++) {
+        for (let i = 0; i < rows.length; i++) {
             let row = rows[i];
             lista.push(
                 new UsuarioEntity(row["usu_id"], row["usu_nome"]
-            );
+                ))
         }
 
         return lista;
     }
 
     async obter(codigo) {
-        
+
         let sql = `select * from tb_usuario u inner join tb_perfil p on u.per_id = p.per_id where u.usu_id = ?`;
-        
+
         let params = [codigo];
 
         let rows = await this.#banco.ExecutaComando(sql, params);
         let lista = [];
-        for(let i = 0; i < rows.length; i++) {
+        for (let i = 0; i < rows.length; i++) {
             let row = rows[i];
             lista.push(new UsuarioEntity(row["usu_id"], row["usu_nome"], row["usu_email"]));
         }
@@ -48,7 +48,7 @@ export default class inicioRepository {
     }
 
     async excluir(codigo) {
-        
+
         let sql = "delete from tb_usuario where usu_id = ?"
         let params = [codigo];
 

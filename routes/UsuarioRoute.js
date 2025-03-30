@@ -16,4 +16,10 @@ router.get('/usuario', (req,res) => {
     ctrl.ListarUsuarios(req,res)
 });
 
+router.put('/usuario', (req,res) => {
+    // #swagger.tags = ['Usuários']
+    // #swagger.summary = "Endpoint para alterar os dados do usuario ja cadastrado"
+    ctrl.AlterarUsuario(req,res);
+})
+
 export default router;
