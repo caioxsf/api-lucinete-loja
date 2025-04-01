@@ -80,6 +80,14 @@ export default class UsuarioController {
             return res.status(404).json({ msg: "Nenhum usuario encontrado!" })
     }
 
+    async ObterUsuario (req, res) {
+        let {id} = req.params;
+        let usuario = await this.#repoRegistroUsuario.ObterComUsuario(id);
+        if(usuario === null)
+            return res.status(404).json({msg: "Nenhum usuario encontrado!"})
+        else
+            return res.status(201).json(usuario);
+    }
 
     async ListarUsuarios(req, res) {
         let usuarios = await this.#repoRegistroUsuario.ListarUsuarios();

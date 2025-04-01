@@ -117,6 +117,31 @@
       }
     },
     "/usuario/{id}": {
+      "get": {
+        "tags": [
+          "Usuários"
+        ],
+        "summary": "Endpoint para obter um usuário cadastrado",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Usuários"

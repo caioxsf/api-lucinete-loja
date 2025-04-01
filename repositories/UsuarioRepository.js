@@ -30,6 +30,35 @@ export default class UsuarioRepository {
         return resultado;
     }
 
+    async ObterComUsuario(id) {
+        let sql = `SELECT usu.usu_id, usu.usu_usuario, usu.usu_senha, re.re_nome, re.re_sobrenome, 
+        re.re_email, re.re_cpf, re.re_nascimento, p.per_nome
+        FROM luci_usuarios usu INNER JOIN luci_registro_usuarios re 
+        INNER JOIN luci_perfil p ON usu.re_id = re.re_id AND usu.per_id = p.per_id where re.re_id = ?`
+        let valores = [id];
+        let resultado = await this.#banco.ExecutaComando(sql, valores);
+        let lista = [];
+
+        if (resultado > 0) {
+            for (let i = 0; i < resultado.length; i++) {
+                let row = resultado[i];
+                return lista.push({
+                    id: row['usu_id'],
+                    usuario: row['usu_usuario'],
+                    nome: row['re_nome'],
+                    sobrenome: row['re_sobrenome'],
+                    email: row['re_email'],
+                    cpf: row['re_cpf'],
+                    nascimento: row['re_nascimento'],
+                    perfil: row['per_nome']
+                }
+
+                )
+            }
+        }
+        return null;
+    }
+
     async Obter(id) {
         let sql = `SELECT * FROM luci_registro_usuarios WHERE re_id = ?`;
         let valores = [id];
@@ -73,14 +102,14 @@ export default class UsuarioRepository {
     async DeletarUsuarioLogin(id) {
         let sql = `DELETE FROM luci_usuarios WHERE usu_id = ?`;
         let valores = [id];
-        let resultado = await this.#banco.ExecutaComandoNonQuery(sql,valores);
+        let resultado = await this.#banco.ExecutaComandoNonQuery(sql, valores);
         return resultado;
     }
 
     async DeletarUsuario(id) {
         let sql = `DELETE FROM luci_registro_usuarios WHERE re_id = ?`;
         let valores = [id];
-        let resultado = await this.#banco.ExecutaComandoNonQuery(sql,valores);
+        let resultado = await this.#banco.ExecutaComandoNonQuery(sql, valores);
         return resultado;
     }
 
