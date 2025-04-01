@@ -28,6 +28,12 @@ router.get('/produtos/:id', (req,res) => {
     ctrl.Obter(req,res);
 })
 
+router.delete('/produtos/:id', (req,res) => {
+    // #swagger.tags = ["Produtos"]
+    // #swagger.summary = "Endpont para deletar um produto pelo ID"
+    ctrl.Deletar(req,res);
+})
+
 
 
 export default router;

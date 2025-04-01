@@ -33,11 +33,23 @@ export default class ProdutoController {
     }
 
     async Obter(req, res) {
-        let {id} = req.params;
+        let { id } = req.params;
         let produtos = await this.#repoProduto.Obter(id);
-        if(produtos != null)
+        if (produtos != null)
             return res.status(200).json(produtos);
-        return res.status(404).json({msg: "Nenhum produto foi encontrado"})
+        return res.status(404).json({ msg: "Nenhum produto foi encontrado" })
+    }
+
+    async Deletar(req, res) {
+        let { id } = req.params;
+        if (await this.#repoProduto.Obter(id)) {
+            if (await this.#repoProduto.Deletar(id))
+                return res.status(200).json({ msg: "Produto deletado com sucesso" })
+            else
+                throw new Error("Erro ao deletar usuario do banco de dados")
+        } else
+            return res.status(404).json({ msg: "Produto nao encontrado!" })
+
     }
 
     async ListarProdutos(req, res) {

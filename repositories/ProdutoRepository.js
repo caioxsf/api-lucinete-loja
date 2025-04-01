@@ -37,6 +37,13 @@ export default class ProdutoRepository {
         return null;
     }
 
+    async Deletar(id) {
+        let sql = `DELETE FROM luci_produtos WHERE prod_id = ?`;
+        let valores = [id];
+        let resultado = await this.#banco.ExecutaComandoNonQuery(sql,valores);
+        return resultado;
+    }
+
     async ListarProdutos() {
     let sql = `SELECT * FROM luci_produtos`;
     let row = await this.#banco.ExecutaComando(sql);

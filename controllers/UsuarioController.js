@@ -89,6 +89,7 @@ export default class UsuarioController {
             return res.status(201).json(usuario);
     }
 
+
     async ListarUsuarios(req, res) {
         let usuarios = await this.#repoRegistroUsuario.ListarUsuarios();
         if (usuarios === null)
