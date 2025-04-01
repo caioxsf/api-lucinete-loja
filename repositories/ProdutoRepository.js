@@ -15,6 +15,13 @@ export default class ProdutoRepository {
         return resultado;
     }
 
+    async AlterarProduto(entidade) {
+        let sql = `UPDATE luci_produtos SET prod_nome = ?, prod_estoque = ?, prod_preco = ? WHERE prod_id = ?`;
+        let valores = [entidade.nome, entidade.estoque, entidade.preco, entidade.id];
+        let resultado = await this.#banco.ExecutaComandoNonQuery(sql,valores);
+        return resultado;
+    }
+
     async ListarProdutos() {
         let sql = `SELECT * FROM luci_produtos`;
         let row = await this.#banco.ExecutaComando(sql);

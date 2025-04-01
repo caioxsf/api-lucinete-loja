@@ -10,6 +10,12 @@ router.get('/produtos', (req,res) => {
     ctrl.ListarProdutos(req,res);
 })
 
+router.put('/produtos', (req,res) => {
+    // #swagger.tags = ["Produtos"]
+    // #swagger.summary = "Endpont para alterar um produto"
+    ctrl.AlterarProduto(req,res);
+})
+
 router.post('/produtos', (req,res) => {
     // #swagger.tags = ["Produtos"]
     // #swagger.summary = "Endpont para cadastrar um produto"

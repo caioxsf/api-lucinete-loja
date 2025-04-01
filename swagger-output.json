@@ -184,6 +184,44 @@
           }
         }
       },
+      "put": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Endpont para alterar um produto",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "example": "any"
+                  },
+                  "nome": {
+                    "example": "any"
+                  },
+                  "estoque": {
+                    "example": "any"
+                  },
+                  "preco": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Produtos"
