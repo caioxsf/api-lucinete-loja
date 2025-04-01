@@ -167,6 +167,43 @@
           }
         }
       }
+    },
+    "/produtos": {
+      "post": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Endpont para cadastrar um produto",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "example": "any"
+                  },
+                  "estoque": {
+                    "example": "any"
+                  },
+                  "preco": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

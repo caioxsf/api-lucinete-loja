@@ -10,7 +10,7 @@ const doc = {
 const outputJson = "./swagger-output.json";
 // Aqui colocar todas as rodas exemplo:
 // ['./routes/testeRoute.js', ./routes/teste2Route2.js']
-const routes = ['./routes/UsuarioRoute.js']
+const routes = ['./routes/UsuarioRoute.js', './routes/ProdutoRoute.js']
 
 swaggerAutogen({openapi: '3.0.0'})(outputJson, routes, doc)
 .then( async () => {
