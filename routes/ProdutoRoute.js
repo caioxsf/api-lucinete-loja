@@ -4,6 +4,12 @@ const router = express.Router();
 
 let ctrl = new ProdutoController();
 
+router.post('/produtos', (req,res) => {
+    // #swagger.tags = ["Produtos"]
+    // #swagger.summary = "Endpont para cadastrar um produto"
+    ctrl.CadastrarProduto(req,res);
+})
+
 router.get('/produtos', (req,res) => {
     // #swagger.tags = ["Produtos"]
     // #swagger.summary = "Endpont para listar todos os produtos"
@@ -16,10 +22,6 @@ router.put('/produtos', (req,res) => {
     ctrl.AlterarProduto(req,res);
 })
 
-router.post('/produtos', (req,res) => {
-    // #swagger.tags = ["Produtos"]
-    // #swagger.summary = "Endpont para cadastrar um produto"
-    ctrl.CadastrarProduto(req,res);
-})
+
 
 export default router;
