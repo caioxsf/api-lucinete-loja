@@ -54,10 +54,30 @@ export default class UsuarioController {
                 else
                     throw new Error("Erro ao alterar usuario no banco de dados!")
             } else
-                return res.status(404).json({msg: "Nenhum usuario foi encontrado com esse ID!"})
+                return res.status(404).json({ msg: "Nenhum usuario foi encontrado com esse ID!" })
 
         } else
             return res.status(400).json({ msg: "Parâmetros invalidos!" })
+    }
+
+    async DeletarUsuario(req, res) {
+        let { id } = req.params;
+        let usu_id = await this.#repoRegistroUsuario.ObterUsuarioLogin(id);
+        if (usu_id != null || usu_id != undefined) {
+            let array_re_id = await this.#repoRegistroUsuario.Obter(usu_id[0].re_id);
+            let re_id = array_re_id.id;
+
+            if (array_re_id != null || array_re_id != undefined) {
+                if (await this.#repoRegistroUsuario.DeletarUsuarioLogin(id)) {
+                    if (await this.#repoRegistroUsuario.DeletarUsuario(re_id)) {
+                        return res.status(200).json({ msg: "Usuario deletado com sucesso!" })
+                    } else
+                        throw new Error("Erro ao deletar usuario do banco de dados")
+                }
+            } else
+                return res.status(404).json({ msg: "Nenhum usuario encontrado!" })
+        } else
+            return res.status(404).json({ msg: "Nenhum usuario encontrado!" })
     }
 
 

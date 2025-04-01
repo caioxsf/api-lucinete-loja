@@ -22,4 +22,10 @@ router.put('/usuario', (req,res) => {
     ctrl.AlterarUsuario(req,res);
 })
 
+router.delete('/usuario/:id', (req,res) => {
+    // #swagger.tags = ['Usuários']
+    // #swagger.summary = "Endpoint para deletar os dados do usuario ja cadastrado"
+    ctrl.DeletarUsuario(req,res);
+})
+
 export default router;

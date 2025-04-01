@@ -8,7 +8,7 @@ export default class UsuarioEntity extends BaseEntity {
     #per_id
     #re_id
 
-    constructor (id,usuario,senha,per_id,cpf,re_id) {
+    constructor (id,usuario,senha,per_id,re_id) {
         super();
         this.#id = id;
         this.#usuario = usuario;
