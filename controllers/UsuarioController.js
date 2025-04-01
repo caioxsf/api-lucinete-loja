@@ -61,7 +61,7 @@ export default class UsuarioController {
     }
 
     async DeletarUsuario(req, res) {
-        let { id } =  -req.params;
+        let { id } =  req.params;
         let usu_id = await this.#repoRegistroUsuario.ObterUsuarioLogin(id);
         if (usu_id != null || usu_id != undefined) {
             let array_re_id = await this.#repoRegistroUsuario.Obter(usu_id[0].re_id);
