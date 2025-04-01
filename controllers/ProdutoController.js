@@ -32,6 +32,14 @@ export default class ProdutoController {
             return res.status(400).json({ msg: "Parâmetros invalidos!" })
     }
 
+    async Obter(req, res) {
+        let {id} = req.params;
+        let produtos = await this.#repoProduto.Obter(id);
+        if(produtos != null)
+            return res.status(200).json(produtos);
+        return res.status(404).json({msg: "Nenhum produto foi encontrado"})
+    }
+
     async ListarProdutos(req, res) {
         let produtos = await this.#repoProduto.ListarProdutos();
         if (produtos != null)

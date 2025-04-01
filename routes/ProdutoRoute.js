@@ -22,6 +22,12 @@ router.put('/produtos', (req,res) => {
     ctrl.AlterarProduto(req,res);
 })
 
+router.get('/produtos/:id', (req,res) => {
+    // #swagger.tags = ["Produtos"]
+    // #swagger.summary = "Endpont para obter um produto pelo ID"
+    ctrl.Obter(req,res);
+})
+
 
 
 export default router;
