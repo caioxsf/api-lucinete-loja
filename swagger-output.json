@@ -312,6 +312,10 @@
     },
     "/vendas": {
       "post": {
+        "tags": [
+          "Venda"
+        ],
+        "summary": "Endpoint para gerar e vender produtos",
         "description": "",
         "responses": {
           "200": {

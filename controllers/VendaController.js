@@ -40,7 +40,7 @@ export default class VendaController {
                         } else
                             return res.status(404).json({msg: `Estoque do produto ${produto_id} insuficiente!`})
                     } else
-                    return res.status(404).json({msg: `Codigo do produto inexistente!`})
+                        return res.status(404).json({msg: `Codigo do produto inexistente!`})
                 }
                 await banco.Commit();
                 return res.status(200).json({ msg: "Venda registrada com sucesso!" })
