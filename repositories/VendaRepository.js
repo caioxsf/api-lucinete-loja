@@ -31,6 +31,13 @@ export default class VendaRepository{
         return resultado;
     }
 
+    async AtualizarTotalVenda(id, total) {
+        let sql = `UPDATE luci_vendas SET ven_total = ? WHERE ven_id = ?`;
+        let valores = [id, total];
+        let resultado = await this.#banco.ExecutaComandoNonQuery(sql,valores);
+        return resultado;
+    }
+
     async VerificarCodigoProduto(id) {
         let sql = `SELECT * FROM luci_produtos WHERE prod_id = ?`;
         let valores = [id];

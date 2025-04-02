@@ -19,6 +19,7 @@ export default class VendaController {
 
             let data = new Date();
             let idVenda = await this.#repoVenda.GerarVenda(data);
+            let total = 0;
 
             if (idVenda) {
                 for (let i = 0; i < req.body.length; i++) {
@@ -34,6 +35,8 @@ export default class VendaController {
                         entidade.item_subtotal = entidade.item_quantidade * parseFloat(preco);
                         entidade.prod_id = produto_id;
 
+                        total += entidade.item_subtotal;
+
                         if (await this.#repoVenda.VerificarEstoque(produto_id, quantidade)) {
                             await this.#repoVenda.AtualizarEstoqueDoProduto(quantidade, produto_id);
                             await this.#repoVenda.CadastrarVenda(entidade);
@@ -42,6 +45,7 @@ export default class VendaController {
                     } else
                         return res.status(404).json({msg: `Codigo do produto inexistente!`})
                 }
+                await this.#repoVenda.AtualizarTotalVenda(total, idVenda);
                 await banco.Commit();
                 return res.status(200).json({ msg: "Venda registrada com sucesso!" })
             }
