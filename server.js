@@ -4,6 +4,7 @@ import express from 'express'
 import UsuarioRoute from './routes/UsuarioRoute.js';
 import ProdutoRoute from './routes/ProdutoRoute.js';
 import VendaRoute from './routes/VendaRoute.js';
+import AuthRoute from './routes/AuthRoute.js';
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -18,6 +19,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(outputJson));
 app.use('/', UsuarioRoute);
 app.use('/', ProdutoRoute);
 app.use('/', VendaRoute)
+app.use('/', AuthRoute)
 
 app.listen(5000, function() {
     console.log("backend em execução");

@@ -42,7 +42,7 @@ export default class UsuarioRepository {
         if (resultado.length > 0) {
             for (let i = 0; i < resultado.length; i++) {
                 let row = resultado[i];
-                 lista.push({
+                lista.push({
                     id: row['usu_id'],
                     usuario: row['usu_usuario'],
                     nome: row['re_nome'],
@@ -54,7 +54,7 @@ export default class UsuarioRepository {
                 })
             }
         }
-        if(lista.length > 0)
+        if (lista.length > 0)
             return lista;
         return null
     }
@@ -85,19 +85,19 @@ export default class UsuarioRepository {
         let rows = await this.#banco.ExecutaComando(sql, valores);
         let lista = [];
         if (rows.length > 0) {
-            for (let i = 0; i < rows.length; i++) {
-                let row = rows[i];
-                lista.push(new UsuarioEntity(
-                    row['usu_id'],
-                    row['usu_usuario'],
-                    row['usu_senha'],
-                    row['per_id'],
-                    row['re_id']
-                ))
-            }
+            let row = rows[0];
+            lista.push(new UsuarioEntity(
+                row['usu_id'],
+                row['usu_usuario'],
+                row['usu_senha'],
+                row['per_id'],
+                row['re_id']
+            ))
             return lista;
         }
+        return null;
     }
+
 
     async DeletarUsuarioLogin(id) {
         let sql = `DELETE FROM luci_usuarios WHERE usu_id = ?`;
@@ -137,6 +137,24 @@ export default class UsuarioRepository {
             )
         }
         return lista;
+    }
+
+    async ValidarAcesso(usuario, senha) {
+        let sql = `SELECT * FROM luci_usuarios WHERE usu_usuario = ? AND usu_senha = ?`;
+        let valores = [usuario, senha];
+        let rows = await this.#banco.ExecutaComando(sql, valores);
+        let lista = [];
+        if (rows.length > 0) {
+            let row = rows[0];
+            lista.push({
+                id: row['usu_id'],
+                usuario: row['usu_usuario'],
+                perfil: row['per_id'],
+                registro_usuario: row['re_id']
+            })
+            return lista;
+        }
+        return null;
     }
 
 }

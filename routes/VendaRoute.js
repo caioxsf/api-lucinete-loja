@@ -1,10 +1,15 @@
 import express from 'express'
 import VendaController from '../controllers/VendaController.js';
+import AuthMiddleware from '../middlewares/authMiddleware.js';
 const router = express.Router();
 
 let ctrl = new VendaController();
+let auth = new AuthMiddleware();
 
-router.post('/vendas', (req,res) => {
+router.post('/vendas', auth.validar, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
     // #swagger.tags = ["Venda"]
     // #swagger.summary = "Endpoint para gerar e vender produtos"
     /* 
@@ -29,7 +34,10 @@ router.post('/vendas', (req,res) => {
     ctrl.VenderProdutos(req,res);
 })
 
-router.get('/vendas', (req,res) => {
+router.get('/vendas', auth.validar, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
     // #swagger.tags = ["Venda"]
     // #swagger.summary = "Endpoint para listar todas as vendas"
     ctrl.ListarVendas(req,res);
