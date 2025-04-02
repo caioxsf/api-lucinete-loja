@@ -38,9 +38,9 @@ export default class VendaController {
                             await this.#repoVenda.AtualizarEstoqueDoProduto(quantidade, produto_id);
                             await this.#repoVenda.CadastrarVenda(entidade);
                         } else
-                            throw new Error(`Estoque do produto ${produto_id} insuficiente!`)
+                            return res.status(404).json({msg: `Estoque do produto ${produto_id} insuficiente!`})
                     } else
-                        throw new Error(`Codigo do produto inexistente`)
+                    return res.status(404).json({msg: `Codigo do produto inexistente!`})
                 }
                 await banco.Commit();
                 return res.status(200).json({ msg: "Venda registrada com sucesso!" })
