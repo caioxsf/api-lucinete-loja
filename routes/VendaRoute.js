@@ -29,4 +29,10 @@ router.post('/vendas', (req,res) => {
     ctrl.VenderProdutos(req,res);
 })
 
+router.get('/vendas', (req,res) => {
+    // #swagger.tags = ["Venda"]
+    // #swagger.summary = "Endpoint para listar todas as vendas"
+    ctrl.ListarVendas(req,res);
+})
+
 export default router

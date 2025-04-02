@@ -56,4 +56,11 @@ export default class VendaController {
 
     }
 
+    async ListarVendas (req, res) {
+        let vendas = await this.#repoVenda.ListarVendas();
+        if(vendas != null)
+            return res.status(200).json(vendas)
+        return res.status(404).json({msg: "Nenhuma venda foi encontrada"})
+    }
+
 }
