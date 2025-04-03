@@ -24,6 +24,15 @@ router.get('/produtos', auth.validar, (req,res) => {
     ctrl.ListarProdutos(req,res);
 })
 
+router.get('/produtos/estoque-baixo', auth.validar, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
+    // #swagger.tags = ["Produtos"]
+    // #swagger.summary = "Endpont para listar todos os produtos com estoque baixo"
+    ctrl.ProdutosEstoqueBaixo(req,res);
+})
+
 router.put('/produtos', auth.validar, (req,res) => {
     /* #swagger.security = [{
         "bearerAuth": []

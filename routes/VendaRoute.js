@@ -7,9 +7,7 @@ let ctrl = new VendaController();
 let auth = new AuthMiddleware();
 
 router.post('/vendas', auth.validar, (req,res) => {
-    /* #swagger.security = [{
-        "bearerAuth": []
-    }] */
+
     // #swagger.tags = ["Venda"]
     // #swagger.summary = "Endpoint para gerar e vender produtos"
     /* 

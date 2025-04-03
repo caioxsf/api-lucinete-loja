@@ -40,27 +40,46 @@ export default class ProdutoRepository {
     async Deletar(id) {
         let sql = `DELETE FROM luci_produtos WHERE prod_id = ?`;
         let valores = [id];
-        let resultado = await this.#banco.ExecutaComandoNonQuery(sql,valores);
+        let resultado = await this.#banco.ExecutaComandoNonQuery(sql, valores);
         return resultado;
     }
 
     async ListarProdutos() {
-    let sql = `SELECT * FROM luci_produtos`;
-    let row = await this.#banco.ExecutaComando(sql);
-    let lista = [];
-    if (row.length > 0) {
-        for (let i = 0; i < row.length; i++) {
-            let rows = row[i];
-            lista.push(new ProdutoEntity(
-                rows['prod_id'],
-                rows['prod_nome'],
-                rows['prod_estoque'],
-                rows['prod_preco']
-            ))
+        let sql = `SELECT * FROM luci_produtos`;
+        let row = await this.#banco.ExecutaComando(sql);
+        let lista = [];
+        if (row.length > 0) {
+            for (let i = 0; i < row.length; i++) {
+                let rows = row[i];
+                lista.push(new ProdutoEntity(
+                    rows['prod_id'],
+                    rows['prod_nome'],
+                    rows['prod_estoque'],
+                    rows['prod_preco']
+                ))
+            }
+            return lista;
         }
-        return lista;
+        return null;
     }
-    return null;
-}
+
+    async ProdutosEstoqueBaixo() {
+        let sql = `SELECT * FROM luci_produtos WHERE prod_estoque < 10`
+        let row = await this.#banco.ExecutaComando(sql);
+        let lista = [];
+        if(row.length > 0) {
+            for(let i=0;i<row.length;i++) {
+                let rows = row[i];
+                lista.push(new ProdutoEntity(
+                    rows['prod_id'],
+                    rows['prod_nome'],
+                    rows['prod_estoque'],
+                    rows['prod_preco']
+                ))
+            }
+            return lista;
+        }
+        return null;
+    }
 
 }
