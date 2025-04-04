@@ -54,15 +54,17 @@ export default class UsuarioController {
     async AlterarUsuario(req, res) {
         let { id, nome, sobrenome, email, cpf, nascimento } = req.body;
         if (nome && sobrenome && email && cpf && nascimento) {
-            let entidade = new RegistroUsuarioEntity(id, nome, sobrenome, email, cpf, nascimento);
-            if (await this.#repoRegistroUsuario.Obter(id) != null) {
-                if (await this.#repoRegistroUsuario.AlterarUsuario(entidade))
-                    return res.status(200).json({ msg: "Conta do usuario alterada com sucesso!" })
-                else
-                    throw new Error("Erro ao alterar usuario no banco de dados!")
+            if(id == req.usuarioLogado.id) {
+                let entidade = new RegistroUsuarioEntity(id, nome, sobrenome, email, cpf, nascimento);
+                if (await this.#repoRegistroUsuario.Obter(id) != null) {
+                    if (await this.#repoRegistroUsuario.AlterarUsuario(entidade))
+                        return res.status(200).json({ msg: "Conta do usuario alterada com sucesso!" })
+                    else
+                        throw new Error("Erro ao alterar usuario no banco de dados!")
+                } else
+                    return res.status(404).json({ msg: "Nenhum usuario foi encontrado com esse ID!" })
             } else
-                return res.status(404).json({ msg: "Nenhum usuario foi encontrado com esse ID!" })
-
+                return res.status(500).json("Você não pode alterar as informações desse usuario!")
         } else
             return res.status(400).json({ msg: "Parâmetros invalidos!" })
     }
