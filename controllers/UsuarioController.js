@@ -1,6 +1,7 @@
 import Database from "../db/database.js";
 import RegistroUsuarioEntity from "../entities/RegistroUsuarioEntity.js";
 import UsuarioRepository from "../repositories/UsuarioRepository.js"
+import nodemailer from 'nodemailer';
 
 export default class UsuarioController {
 
@@ -28,6 +29,7 @@ export default class UsuarioController {
                     let senha = Math.floor(Math.random() * 900000) + 100000;
 
                     if (await this.#repoRegistroUsuario.CadastrarUsuario(usuario, senha, idRegistroUsuario)) {
+                        await EnviarLogin(email, usuario, senha, nome);
                         await banco.Commit();
                         return res.status(201).json({ msg: "Conta criada com sucesso!" });
                     }
@@ -61,7 +63,7 @@ export default class UsuarioController {
     }
 
     async DeletarUsuario(req, res) {
-        let { id } =  req.params;
+        let { id } = req.params;
         let usu_id = await this.#repoRegistroUsuario.ObterUsuarioLogin(id);
         if (usu_id != null || usu_id != undefined) {
             let array_re_id = await this.#repoRegistroUsuario.Obter(usu_id[0].re_id);
@@ -80,11 +82,11 @@ export default class UsuarioController {
             return res.status(404).json({ msg: "Nenhum usuario encontrado!" })
     }
 
-    async ObterUsuario (req, res) {
-        let {id} = req.params;
+    async ObterUsuario(req, res) {
+        let { id } = req.params;
         let usuario = await this.#repoRegistroUsuario.ObterComUsuario(id);
-        if(usuario === null)
-            return res.status(404).json({msg: "Nenhum usuario encontrado!"})
+        if (usuario === null)
+            return res.status(404).json({ msg: "Nenhum usuario encontrado!" })
         else
             return res.status(201).json(usuario);
     }
@@ -96,4 +98,29 @@ export default class UsuarioController {
             return res.status(404).json({ msg: "Nenhum usuario foi encontrado!" })
         return res.status(200).json(usuarios)
     }
+
+}
+
+async function EnviarLogin(email, usuario, senha, nome) {
+    const trasporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'veigarnobile@gmail.com',
+            pass: 'hpqy pbxj eivw pnuz'
+        },
+    });
+
+    const mailOptions = {
+        from: `veigarnobile@gmail.com`,
+        to: email,
+        subject: `Login e senha - Loja da Luh!`,
+        text: ` Olá, ${nome}, Bem-vindo(a) a loja da luh.
+                Aqui está seu usuario e senha!
+
+                Usuario: ${usuario}
+                Senha: ${senha}
+        `
+    }
+
+    await trasporter.sendMail(mailOptions)
 }
