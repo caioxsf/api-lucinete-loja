@@ -157,4 +157,12 @@ export default class UsuarioRepository {
         return null;
     }
 
+    async VerificarEmail(email) {
+        let sql = `SELECT * FROM luci_registro_usuarios WHERE re_email = ?`
+        let valores = [email]
+        let resultado = await this.#banco.ExecutaComando(sql,valores);
+        if(resultado.length > 0)
+            return false;
+        return true;
+    }
 }
