@@ -30,7 +30,7 @@ router.get('/usuario/:id', auth.validar, (req,res) => {
     ctrl.ObterUsuario(req,res)
 });
 
-router.put('/usuario', auth.validar, (req,res) => {
+router.put('/usuario', auth.validarCliente, (req,res) => {
     /* #swagger.security = [{
         "bearerAuth": []
     }] */
