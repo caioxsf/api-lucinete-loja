@@ -1,5 +1,5 @@
 import express from 'express'
-
+import cors from 'cors'
 // Rotas
 import UsuarioRoute from './routes/UsuarioRoute.js';
 import ProdutoRoute from './routes/ProdutoRoute.js';
@@ -18,8 +18,14 @@ app.use(express.json());
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(outputJson));
 app.use('/', UsuarioRoute);
 app.use('/', ProdutoRoute);
-app.use('/', VendaRoute)
-app.use('/', AuthRoute)
+app.use('/', VendaRoute);
+app.use('/', AuthRoute);
+
+app.use(cors({
+    origin: 'http://127.0.0.1:5500', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
 
 app.listen(5000, function() {
     console.log("backend em execução");

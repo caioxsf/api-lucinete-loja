@@ -68,5 +68,21 @@ export default class ProdutoController {
             return res.status(404).json({msg: "Nenhum produto com estoque baixo!"})
     }
 
+    async ProdutosEstoqueMedio(req,res) {
+        let produtos = await this.#repoProduto.ProdutosEstoqueMedio();
+        if(produtos != null) 
+            return res.status(200).json(produtos)
+        else
+            return res.status(404).json({msg: "Nenhum produto com estoque razoavel!"})
+    }
+
+    async ProdutosEstoqueAlto(req,res) {
+        let produtos = await this.#repoProduto.ProdutosEstoqueAlto();
+        if(produtos != null) 
+            return res.status(200).json(produtos)
+        else
+            return res.status(404).json({msg: "Nenhum produto com estoque razoavel!"})
+    }
+
 
 }

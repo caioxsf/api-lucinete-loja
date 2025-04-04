@@ -82,4 +82,42 @@ export default class ProdutoRepository {
         return null;
     }
 
+    async ProdutosEstoqueMedio () {
+        let sql = `SELECT * FROM luci_produtos WHERE prod_estoque >= 10 AND prod_estoque < 50`;
+        let row = await this.#banco.ExecutaComando(sql);
+        let lista = [];
+        if(row.length > 0) {
+            for(let i=0;i<row.length;i++) {
+                let rows = row[i];
+                lista.push(new ProdutoEntity(
+                    rows['prod_id'],
+                    rows['prod_nome'],
+                    rows['prod_estoque'],
+                    rows['prod_preco']
+                ))
+            }
+            return lista;
+        }
+        return null;
+    }
+
+    async ProdutosEstoqueAlto () {
+        let sql = `SELECT * FROM luci_produtos WHERE prod_estoque >= 50`;
+        let row = await this.#banco.ExecutaComando(sql);
+        let lista = [];
+        if(row.length > 0) {
+            for(let i=0;i<row.length;i++) {
+                let rows = row[i];
+                lista.push(new ProdutoEntity(
+                    rows['prod_id'],
+                    rows['prod_nome'],
+                    rows['prod_estoque'],
+                    rows['prod_preco']
+                ))
+            }
+            return lista;
+        }
+        return null;
+    }
+
 }

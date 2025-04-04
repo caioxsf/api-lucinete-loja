@@ -288,18 +288,10 @@
           "200": {
             "description": "OK"
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Not Found"
           }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -354,6 +346,56 @@
           "Produtos"
         ],
         "summary": "Endpont para listar todos os produtos com estoque baixo",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/produtos/estoque-medio": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Endpont para listar todos os produtos com estoque medio",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/produtos/estoque-alto": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Endpont para listar todos os produtos com estoque alto",
         "description": "",
         "responses": {
           "200": {
