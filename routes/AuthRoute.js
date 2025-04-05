@@ -14,4 +14,14 @@ router.post('/auth/token', (req,res) => {
     ctrl.Token(req,res);
 })
 
+router.post('/auth/usuario', auth.validarCliente, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
+    // #swagger.tags = ['Autenticação']
+    // #swagger.summary = "Endpoint para listar os dados do usuario logado"
+    
+    ctrl.AuthUsuarioLogado(req,res);
+})
+
 export default router;

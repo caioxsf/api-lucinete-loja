@@ -17,4 +17,12 @@ export default class AutenticacaoController {
         } else
             return res.status(400).json({msg: "Parâmetros usuario/senha incorretos!"})
     }
+
+    async AuthUsuarioLogado (req,res) {
+        let repoUsuario = new UsuarioRepository();
+        let usuario = await repoUsuario.ObterComUsuario(req.usuarioLogado.id);
+        if(usuario != null)
+            return res.status(200).json(usuario);
+        return res.status(404).json({msg: "Nenhum usuario encontrado!"});
+    }
 }
