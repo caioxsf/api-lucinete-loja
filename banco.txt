@@ -53,5 +53,5 @@ CREATE TABLE `luci_itens_vendas` (
   CONSTRAINT `fk_ven_id` FOREIGN KEY (`ven_id`) REFERENCES `luci_vendas` (`ven_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO luci_perfil (per_nome) VALUES ('Administrador');
-INSERT INTO luci_perfil (per_nome) VALUES ('Cliente');
+INSERT INTO luci_perfil (per_id,per_nome) VALUES ('1','Administrador');
+INSERT INTO luci_perfil (per_id,per_nome) VALUES ('2','Cliente');
