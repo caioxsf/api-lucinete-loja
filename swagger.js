@@ -1,4 +1,6 @@
 import swaggerAutogen from "swagger-autogen";
+import ProdutoEntity from "./entities/ProdutoEntity.js";
+import CategoriaEntity from "./entities/CategoriaEntity.js";
 
 const doc = {
     info: {
@@ -6,6 +8,17 @@ const doc = {
     },
     host: 'localhost:5000',
     components: {
+        schemas: {
+            produtos: {
+                "id": 1,
+                "nome": "Caneta",
+                "estoque": 10,
+                "preco": 2.50,
+                "categoria": {
+                    "id": 1
+                }
+            }
+        },
         securitySchemes: {
             bearerAuth: {
                 type: "http",

@@ -22,4 +22,13 @@ export default class CategoriaRepository {
             return true;
         return false; 
     }
+
+    async VerificarCategoriaPeloID(id) {
+        let sql = `SELECT * FROM luci_categorias WHERE cat_id = ?`;
+        let valores = [id];
+        let row = await this.#banco.ExecutaComando(sql,valores);
+        if(row.length > 0)
+            return true;
+        return false;
+    }
 }

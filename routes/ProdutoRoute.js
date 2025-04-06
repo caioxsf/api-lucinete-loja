@@ -12,6 +12,20 @@ router.post('/produtos', auth.validar, (req,res) => {
     }] */
     // #swagger.tags = ["Produtos"]
     // #swagger.summary = "Endpont para cadastrar um produto"
+    // #swagger.tags = ['Usuários']
+    // #swagger.summary = "Cadastra um usuário no banco de dados"
+    /* #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/produtos"
+                    }
+                }
+            }
+        }
+
+    */
     ctrl.CadastrarProduto(req,res);
 })
 

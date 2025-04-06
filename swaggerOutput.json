@@ -609,42 +609,33 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
     "schemas": {
       "produtos": {
         "type": "object",
         "properties": {
           "id": {
             "type": "number",
-            "example": 1
+            "example": 111
           },
           "nome": {
             "type": "string",
-            "example": "Caneta"
+            "example": "Caneta Bic Azul"
           },
           "estoque": {
-            "type": "number",
-            "example": 10
+            "type": "string",
+            "example": "10"
           },
           "preco": {
-            "type": "number",
-            "example": 2.5
-          },
-          "categoria": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number",
-                "example": 1
-              }
-            }
+            "type": "string",
+            "example": "2.50"
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
       }
     }
   }

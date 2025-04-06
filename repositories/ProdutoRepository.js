@@ -9,8 +9,8 @@ export default class ProdutoRepository {
     }
 
     async CadastrarProduto(entidade) {
-        let sql = `INSERT INTO luci_produtos (prod_nome, prod_estoque, prod_preco) VALUES (?,?,?)`;
-        let valores = [entidade.nome, entidade.estoque, entidade.preco];
+        let sql = `INSERT INTO luci_produtos (prod_nome, prod_estoque, prod_preco, cat_id) VALUES (?,?,?,?)`;
+        let valores =   [entidade.nome, entidade.estoque, entidade.preco, entidade.categoria.id];
         let resultado = await this.#banco.ExecutaComandoNonQuery(sql, valores);
         return resultado;
     }

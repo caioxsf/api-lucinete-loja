@@ -1,21 +1,29 @@
+import CategoriaEntity from "../entities/CategoriaEntity.js";
 import ProdutoEntity from "../entities/ProdutoEntity.js";
+import CategoriaRepository from "../repositories/CategoriaRepository.js";
 import ProdutoRepository from "../repositories/ProdutoRepository.js"
 
 export default class ProdutoController {
 
     #repoProduto
+    #repoCategoria
     constructor() {
+        this.#repoCategoria = new CategoriaRepository();
         this.#repoProduto = new ProdutoRepository();
     }
 
     async CadastrarProduto(req, res) {
-        let { nome, estoque, preco } = req.body;
-        if (nome && estoque && preco > 0) {
-            let entidade = new ProdutoEntity(0, nome, estoque, preco);
-            if (await this.#repoProduto.CadastrarProduto(entidade))
+        let { nome, estoque, preco, categoria } = req.body;
+        if (nome && estoque && preco > 0 && categoria.id) {
+            let entidade = new ProdutoEntity(0, nome, estoque, preco, new CategoriaEntity(categoria.id));
+            if(await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id) == true) {
+                if (await this.#repoProduto.CadastrarProduto(entidade))
                 return res.status(201).json({ msg: "Produto cadastrado com sucesso!" })
             else
                 throw new Error("Erro ao inserir produto no banco de dados")
+            } else
+                return res.status(400).json({msg: "A categoria do produto não existe!"})
+            
         } else
             return res.status(400).json({ msg: "Parâmetros invalidos!" })
     }
