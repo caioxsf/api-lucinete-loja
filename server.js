@@ -5,6 +5,7 @@ import UsuarioRoute from './routes/UsuarioRoute.js';
 import ProdutoRoute from './routes/ProdutoRoute.js';
 import VendaRoute from './routes/VendaRoute.js';
 import AuthRoute from './routes/AuthRoute.js';
+import CategoriaRoute from './routes/CategoriaRoute.js';
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -20,6 +21,7 @@ app.use('/', UsuarioRoute);
 app.use('/', ProdutoRoute);
 app.use('/', VendaRoute);
 app.use('/', AuthRoute);
+app.use('/', CategoriaRoute);
 
 app.use(cors({
     origin: 'http://127.0.0.1:5500', 

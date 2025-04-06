@@ -20,6 +20,7 @@ const outputJson = "./swagger-output.json";
 // ['./routes/testeRoute.js', ./routes/teste2Route2.js']
 const routes = ['./routes/AuthRoute.js',
                 './routes/UsuarioRoute.js',
+                './routes/CategoriaRoute.js',
                  './routes/ProdutoRoute.js',
                 './routes/VendaRoute.js']
 

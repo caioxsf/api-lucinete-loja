@@ -265,6 +265,45 @@
         ]
       }
     },
+    "/categoria": {
+      "post": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Endpoint para criar a categoria do produto",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/produtos": {
       "post": {
         "tags": [
