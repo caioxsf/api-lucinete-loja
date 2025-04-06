@@ -16,26 +16,30 @@ export default class ProdutoController {
         let { nome, estoque, preco, categoria } = req.body;
         if (nome && estoque && preco > 0 && categoria.id) {
             let entidade = new ProdutoEntity(0, nome, estoque, preco, new CategoriaEntity(categoria.id));
-            if(await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id) == true) {
+            if (await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id) == true) {
                 if (await this.#repoProduto.CadastrarProduto(entidade))
-                return res.status(201).json({ msg: "Produto cadastrado com sucesso!" })
-            else
-                throw new Error("Erro ao inserir produto no banco de dados")
+                    return res.status(201).json({ msg: "Produto cadastrado com sucesso!" })
+                else
+                    throw new Error("Erro ao inserir produto no banco de dados")
             } else
-                return res.status(400).json({msg: "A categoria do produto não existe!"})
-            
+                return res.status(400).json({ msg: "A categoria do produto não existe!" })
+
         } else
             return res.status(400).json({ msg: "Parâmetros invalidos!" })
     }
 
     async AlterarProduto(req, res) {
-        let { id, nome, estoque, preco } = req.body;
-        if (id > 0 && nome && estoque && preco > 0) {
-            let entidade = new ProdutoEntity(id, nome, estoque, preco);
-            if (await this.#repoProduto.AlterarProduto(entidade))
-                return res.status(201).json({ msg: "Produto alterado com sucesso!" })
-            else
-                throw new Error("Erro ao alterar produto no banco de dados")
+        let { id, nome, estoque, preco, categoria } = req.body;
+        if (id > 0 && nome && estoque && preco > 0 && categoria.id) {
+            let entidade = new ProdutoEntity(id, nome, estoque, preco, new CategoriaEntity(categoria.id));
+            if (await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id) == true) {
+                if (await this.#repoProduto.AlterarProduto(entidade))
+                    return res.status(201).json({ msg: "Produto alterado com sucesso!" })
+                else
+                    return res.status(400).json({msg: "Esse produto não existe!"})
+            } else
+                return res.status(400).json({ msg: "A categoria do produto não existe!" })
+
         } else
             return res.status(400).json({ msg: "Parâmetros invalidos!" })
     }
@@ -68,28 +72,28 @@ export default class ProdutoController {
             return res.status(404).json({ msg: "Nenhum produto foi encontrado!" })
     }
 
-    async ProdutosEstoqueBaixo(req,res) {
+    async ProdutosEstoqueBaixo(req, res) {
         let produtos = await this.#repoProduto.ProdutosEstoqueBaixo();
-        if(produtos != null) 
+        if (produtos != null)
             return res.status(200).json(produtos)
         else
-            return res.status(404).json({msg: "Nenhum produto com estoque baixo!"})
+            return res.status(404).json({ msg: "Nenhum produto com estoque baixo!" })
     }
 
-    async ProdutosEstoqueMedio(req,res) {
+    async ProdutosEstoqueMedio(req, res) {
         let produtos = await this.#repoProduto.ProdutosEstoqueMedio();
-        if(produtos != null) 
+        if (produtos != null)
             return res.status(200).json(produtos)
         else
-            return res.status(404).json({msg: "Nenhum produto com estoque razoavel!"})
+            return res.status(404).json({ msg: "Nenhum produto com estoque razoavel!" })
     }
 
-    async ProdutosEstoqueAlto(req,res) {
+    async ProdutosEstoqueAlto(req, res) {
         let produtos = await this.#repoProduto.ProdutosEstoqueAlto();
-        if(produtos != null) 
+        if (produtos != null)
             return res.status(200).json(produtos)
         else
-            return res.status(404).json({msg: "Nenhum produto com estoque razoavel!"})
+            return res.status(404).json({ msg: "Nenhum produto com estoque razoavel!" })
     }
 
 
