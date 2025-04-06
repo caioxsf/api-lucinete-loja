@@ -23,7 +23,9 @@ export default class ProdutoRepository {
     }
 
     async Obter(id) {
-        let sql = `SELECT * FROM luci_produtos WHERE prod_id = ?`;
+        let sql = `SELECT p.prod_id, p.prod_nome, p.prod_estoque, p.prod_preco, c.cat_nome 
+        FROM luci_produtos p 
+        INNER JOIN luci_categorias c on p.cat_id = c.cat_id WHERE prod_id = ?`;
         let valores = [id];
         let rows = await this.#banco.ExecutaComando(sql, valores);
         if (rows.length > 0) {
@@ -32,6 +34,7 @@ export default class ProdutoRepository {
                 rows[0]['prod_nome'],
                 rows[0]['prod_estoque'],
                 rows[0]['prod_preco'],
+                rows[0]['cat_nome'],
             )
         }
         return null;
@@ -45,7 +48,9 @@ export default class ProdutoRepository {
     }
 
     async ListarProdutos() {
-        let sql = `SELECT * FROM luci_produtos`;
+        let sql = ` SELECT p.prod_id, p.prod_nome, p.prod_estoque, p.prod_preco, c.cat_nome 
+                    FROM luci_produtos p 
+                    INNER JOIN luci_categorias c on p.cat_id = c.cat_id`;
         let row = await this.#banco.ExecutaComando(sql);
         let lista = [];
         if (row.length > 0) {
@@ -55,7 +60,8 @@ export default class ProdutoRepository {
                     rows['prod_id'],
                     rows['prod_nome'],
                     rows['prod_estoque'],
-                    rows['prod_preco']
+                    rows['prod_preco'],
+                    rows['cat_nome']
                 ))
             }
             return lista;
