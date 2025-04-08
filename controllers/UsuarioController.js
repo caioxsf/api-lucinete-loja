@@ -2,6 +2,7 @@ import Database from "../db/database.js";
 import RegistroUsuarioEntity from "../entities/RegistroUsuarioEntity.js";
 import UsuarioRepository from "../repositories/UsuarioRepository.js"
 import nodemailer from 'nodemailer';
+import UsuarioService from "../services/UsuarioService.js";
 
 export default class UsuarioController {
 
@@ -10,46 +11,8 @@ export default class UsuarioController {
         this.#repoRegistroUsuario = new UsuarioRepository();
     }
 
-    async CadastrarUsuario(req, res) {
-        let banco = new Database();
-        try {
-
-            this.#repoRegistroUsuario.banco = banco;
-            await banco.AbreTransacao();
-
-            let { nome, sobrenome, email, cpf, nascimento } = req.body;
-            if (nome && sobrenome && email && cpf && nascimento) {
-
-                if (await this.#repoRegistroUsuario.VerificarEmail(email) == true) {
-                    // testes
-                    let entidade = new RegistroUsuarioEntity(0, nome, sobrenome, email, cpf, nascimento);
-                    let idRegistroUsuario = await this.#repoRegistroUsuario.CadastrarRegistroUsuario(entidade);
-
-                    if (idRegistroUsuario) {
-                        let nomeMinusculo = nome.toString().toLowerCase();
-                        let usuario = nomeMinusculo + Math.floor(Math.random() * 900000);
-                        let senha = Math.floor(Math.random() * 900000) + 100000;
-
-                        if (await this.#repoRegistroUsuario.CadastrarUsuario(usuario, senha, idRegistroUsuario)) {
-                            await EnviarLogin(email, usuario, senha, nome);
-                            await banco.Commit();
-                            return res.status(201).json({ msg: "Conta criada com sucesso!" });
-                        }
-
-                        else
-                            throw new Error("Erro ao inserir conta no banco de dados");
-                    } else
-                        throw new Error("Erro ao inserir registro de conta no banco de dados")
-                } else
-                    return res.status(409).json({msg: "Já existe uma conta cadastrada com esse e-mail!"})
-
-
-            } else
-                return res.status(400).json({ msg: "Corpo da requisisão não está adequado!" })
-        } catch (ex) {
-            await banco.Rollback();
-            return res.status(400).json({ msg: "Erro interno no servidor!" })
-        }
+    static async CadastrarUsuario(req, res) {
+        const resultado = await UsuarioService.CadastrarUsuarioServices(req.body)
     }
 
     async AlterarUsuario(req, res) {
