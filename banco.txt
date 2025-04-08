@@ -1,26 +1,33 @@
+show create table luci_categorias;
+show create table luci_itens_vendas;
+show create table luci_perfil;
+show create table luci_produtos;
+show create table luci_registro_usuarios;
+show create table luci_usuarios;
+show create table luci_vendas;
+
+CREATE TABLE `luci_categorias` (
+  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat_nome` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `luci_perfil` (
   `per_id` int(11) NOT NULL AUTO_INCREMENT,
   `per_nome` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`per_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `luci_registro_usuarios` (
-  `re_id` int(11) NOT NULL AUTO_INCREMENT,
-  `re_nome` varchar(100) DEFAULT NULL,
-  `re_sobrenome` varchar(100) DEFAULT NULL,
-  `re_email` varchar(100) DEFAULT NULL,
-  `re_cpf` varchar(20) DEFAULT NULL,
-  `re_nascimento` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`re_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 CREATE TABLE `luci_produtos` (
   `prod_id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_nome` varchar(50) DEFAULT NULL,
   `prod_estoque` int(11) DEFAULT NULL,
   `prod_preco` decimal(10,2) DEFAULT NULL,
-  PRIMARY KEY (`prod_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `cat_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`prod_id`),
+  KEY `fk_cat_id` (`cat_id`),
+  CONSTRAINT `fk_cat_id` FOREIGN KEY (`cat_id`) REFERENCES `luci_categorias` (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `luci_vendas` (
   `ven_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -29,16 +36,6 @@ CREATE TABLE `luci_vendas` (
   PRIMARY KEY (`ven_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `luci_usuarios` (
-  `usu_id` int(11) NOT NULL AUTO_INCREMENT,
-  `usu_usuario` varchar(50) DEFAULT NULL,
-  `usu_senha` varchar(50) DEFAULT NULL,
-  `per_id` int(11) DEFAULT NULL,
-  `re_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`usu_id`),
-  CONSTRAINT `fk_luci_usuarios_perfil` FOREIGN KEY (`per_id`) REFERENCES `luci_perfil` (`per_id`),
-  CONSTRAINT `fk_registro_usuarios` FOREIGN KEY (`re_id`) REFERENCES `luci_registro_usuarios` (`re_id`)
-);
 CREATE TABLE `luci_itens_vendas` (
   `item_id` int(11) NOT NULL AUTO_INCREMENT,
   `ven_id` int(11) DEFAULT NULL,
@@ -52,6 +49,29 @@ CREATE TABLE `luci_itens_vendas` (
   CONSTRAINT `fk_prod_id` FOREIGN KEY (`prod_id`) REFERENCES `luci_produtos` (`prod_id`),
   CONSTRAINT `fk_ven_id` FOREIGN KEY (`ven_id`) REFERENCES `luci_vendas` (`ven_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `luci_registro_usuarios` (
+  `re_id` int(11) NOT NULL AUTO_INCREMENT,
+  `re_nome` varchar(100) DEFAULT NULL,
+  `re_sobrenome` varchar(100) DEFAULT NULL,
+  `re_email` varchar(100) DEFAULT NULL,
+  `re_cpf` varchar(20) DEFAULT NULL,
+  `re_nascimento` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`re_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `luci_usuarios` (
+  `usu_id` int(11) NOT NULL AUTO_INCREMENT,
+  `usu_usuario` varchar(50) DEFAULT NULL,
+  `usu_senha` varchar(50) DEFAULT NULL,
+  `per_id` int(11) DEFAULT NULL,
+  `re_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`usu_id`),
+  KEY `fk_per_id` (`per_id`),
+  KEY `fk_registro_usuarios` (`re_id`),
+  CONSTRAINT `fk_per_id` FOREIGN KEY (`per_id`) REFERENCES `luci_perfil` (`per_id`),
+  CONSTRAINT `fk_registro_usuarios` FOREIGN KEY (`re_id`) REFERENCES `luci_registro_usuarios` (`re_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO luci_perfil (per_id,per_nome) VALUES ('1','Administrador');
 INSERT INTO luci_perfil (per_id,per_nome) VALUES ('2','Cliente');
