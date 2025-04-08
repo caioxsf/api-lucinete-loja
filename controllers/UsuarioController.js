@@ -30,11 +30,13 @@ export default class UsuarioController {
                         let senha = Math.floor(Math.random() * 900000) + 100000;
 
                         if (await this.#repoRegistroUsuario.CadastrarUsuario(usuario, senha, idRegistroUsuario)) {
-                            await EnviarLogin(email, usuario, senha, nome);
-                            await banco.Commit();
-                            return res.status(201).json({ msg: "Conta criada com sucesso!" });
+                            if(await EnviarLogin(email, usuario, senha, nome)) {
+                                await banco.Commit();
+                                return res.status(201).json({ msg: "Conta criada com sucesso!" });
+                            } else {
+                                return res.status(400).json({msg: "Esse endereço de email não existe!"})
+                            }
                         }
-
                         else
                             throw new Error("Erro ao inserir conta no banco de dados");
                     } else
