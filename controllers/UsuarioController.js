@@ -21,6 +21,7 @@ export default class UsuarioController {
             if (nome && sobrenome && email && cpf && nascimento) {
 
                 if (await this.#repoRegistroUsuario.VerificarEmail(email) == true) {
+                    // testes
                     let entidade = new RegistroUsuarioEntity(0, nome, sobrenome, email, cpf, nascimento);
                     let idRegistroUsuario = await this.#repoRegistroUsuario.CadastrarRegistroUsuario(entidade);
 
