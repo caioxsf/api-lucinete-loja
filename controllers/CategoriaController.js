@@ -9,7 +9,6 @@ export default class CategoriaController {
     }
 
     async CadastrarCategoria(req, res) {
-        // testes
         let {nome} = req.body;
         if(nome) {
             if(await this.#repoCategoria.VerificarCategoria(nome) == false) {
