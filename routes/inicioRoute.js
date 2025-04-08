@@ -13,3 +13,8 @@ router.get('/', authMiddleware.validar, (req,res) => {
 });
 
 export default router;
+
+
+function teste () {
+    
+}
