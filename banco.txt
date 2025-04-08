@@ -1,11 +1,3 @@
-show create table luci_categorias;
-show create table luci_itens_vendas;
-show create table luci_perfil;
-show create table luci_produtos;
-show create table luci_registro_usuarios;
-show create table luci_usuarios;
-show create table luci_vendas;
-
 CREATE TABLE `luci_categorias` (
   `cat_id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_nome` varchar(50) DEFAULT NULL,
