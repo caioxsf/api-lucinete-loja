@@ -13,7 +13,7 @@
     "swagger-ui-express": "^5.0.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node swagger.js",
     "dev": "node --es-module-specifier-resolution=node server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll"
   },
