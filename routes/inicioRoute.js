@@ -19,6 +19,14 @@ function teste () {
     
 }
 
+function branchNormal () {
+
+}
+
 function branch () {
+    
+}
+
+function teste2 () {
     
 }
