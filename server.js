@@ -24,7 +24,7 @@ app.use('/', AuthRoute);
 app.use('/', CategoriaRoute);
 
 
-app.listen(5000, function() {
+app.listen(3001, function() {
     console.log("backend em execução");
 })
 
