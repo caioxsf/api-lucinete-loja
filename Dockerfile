@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3001
 
 # Etapa 7: Gerar Swagger e rodar o servidor
-CMD npm run swagger && npm start
+CMD npm start
