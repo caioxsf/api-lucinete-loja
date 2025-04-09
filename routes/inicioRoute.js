@@ -20,5 +20,9 @@ function teste () {
 }
 
 function branchNormal () {
+
+}
+
+function branch () {
     
 }
