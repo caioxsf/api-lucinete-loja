@@ -13,7 +13,8 @@
     "swagger-ui-express": "^5.0.0"
   },
   "scripts": {
-    "start": "node swagger.js"
+    "swagger": "node swagger.js",
+    "start": "node server.js"
   },
   "name": "pfs2",
   "version": "1.0.0",
