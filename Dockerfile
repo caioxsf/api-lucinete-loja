@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /app
 
 # Etapa 3: Copiar package.json e package-lock.json
-COPY package*.json .
+COPY package*.json . 
 
 # Etapa 4: Instalar dependências
 RUN npm install
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3001
 
 # Etapa 7: Gerar Swagger e rodar o servidor
-CMD npm start
+CMD npm run swagger && npm start

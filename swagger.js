@@ -6,7 +6,7 @@ const doc = {
     info: {
         title: "API RESTful",
     },
-    host: 'localhost:3001',
+    host: '161.97.170.146:3001',
     components: {
         schemas: {
             produtos: {
