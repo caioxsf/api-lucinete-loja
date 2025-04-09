@@ -1,5 +1,4 @@
 import express from 'express'
-import cors from 'cors'
 // Rotas
 import UsuarioRoute from './routes/UsuarioRoute.js';
 import ProdutoRoute from './routes/ProdutoRoute.js';
@@ -23,11 +22,6 @@ app.use('/', VendaRoute);
 app.use('/', AuthRoute);
 app.use('/', CategoriaRoute);
 
-app.use(cors({
-    origin: 'http://127.0.0.1:5500', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    allowedHeaders: ['Content-Type', 'Authorization']
-  }));
 
 app.listen(5000, function() {
     console.log("backend em execução");
