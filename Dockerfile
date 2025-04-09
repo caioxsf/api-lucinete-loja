@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Etapa 6: Expor a porta usada pela aplicação
-EXPOSE 3000
+EXPOSE 3001
 
 # Etapa 7: Gerar Swagger e rodar o servidor
 CMD npm run swagger && npm start
