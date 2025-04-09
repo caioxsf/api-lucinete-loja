@@ -1,4 +1,5 @@
 import express from 'express'
+import dotenv from 'dotenv';
 // Rotas
 import UsuarioRoute from './routes/UsuarioRoute.js';
 import ProdutoRoute from './routes/ProdutoRoute.js';
@@ -10,7 +11,7 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const outputJson = require("./swagger-output.json");
 import swaggerUi from 'swagger-ui-express';
-
+dotenv.config();
 const app = express();
 app.use(express.json());
 
