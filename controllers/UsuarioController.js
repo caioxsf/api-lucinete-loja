@@ -114,13 +114,13 @@ async function EnviarLogin(email, usuario, senha, nome) {
     const trasporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'veigarnobile@gmail.com',
-            pass: 'hpqy pbxj eivw pnuz'
+            user:  process.env.GMAIL,
+            pass: process.env.PASS_GMAIL
         },
     });
 
     const mailOptions = {
-        from: 'veigarnobile@gmail.com',
+        from: process.env.GMAIL,
         to: email,
         subject: '🎉 Bem-vindo(a) à Loja da Luh! - Seus dados de acesso',
         html: `
