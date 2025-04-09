@@ -22,3 +22,7 @@ function teste () {
 function branch () {
     
 }
+
+function teste2 () {
+    
+}
