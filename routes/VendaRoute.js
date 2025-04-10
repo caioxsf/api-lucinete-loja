@@ -39,7 +39,7 @@ router.get('/vendas', auth.validar, (req, res) => {
         "bearerAuth": []
     }] */
     // #swagger.tags = ["Venda"]
-    // #swagger.summary = "Endpoint para listar todas as vendas"
+    // #swagger.summary = "Endpoint para listar todas as vendas teste"
     ctrl.ListarVendas(req, res);
 })
 
