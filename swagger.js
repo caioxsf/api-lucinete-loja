@@ -6,9 +6,9 @@ const doc = {
     info: {
         title: "API RESTful",
     },
-    // host: "projetos-api-lucinete-loja.lp3jkk.easypanel.host",
-    host: "localhost:3001",
-    // schemes: ["https"],
+    host: "projetos-api-lucinete-loja.lp3jkk.easypanel.host",
+    // host: "localhost:3001",
+    schemes: ["https"],
     components: {
         schemas: {
             produtos: {
