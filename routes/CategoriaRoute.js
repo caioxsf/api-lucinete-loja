@@ -15,4 +15,42 @@ router.post('/categoria', auth.validar, (req,res) => {
     ctrl.CadastrarCategoria(req,res);
 })
 
+router.get('/categoria', auth.validar, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
+    // #swagger.tags = ['Categorias']
+    // #swagger.summary = "Endpoint para listar todas as categorias"
+    ctrl.ListarCategorias(req,res);
+})
+
+router.put('/categoria', auth.validar, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
+    // #swagger.tags = ['Categorias']
+    // #swagger.summary = "Endpoint para alterar uma categoria"
+    ctrl.AlterarCategoria(req,res);
+})
+
+router.get('/categoria/:id', auth.validar, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
+    // #swagger.tags = ['Categorias']
+    // #swagger.summary = "Endpoint para obter uma categoria"
+    ctrl.ObterCategoria(req,res);
+})
+
+router.delete('/categoria/:id', auth.validar, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
+    // #swagger.tags = ['Categorias']
+    // #swagger.summary = "Endpoint para deletar uma categoria"
+    ctrl.DeletarCategoria(req,res);
+})
+
+
+
 export default router;
