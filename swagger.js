@@ -6,9 +6,9 @@ const doc = {
     info: {
         title: "API RESTful",
     },
-    // host: "projetos-api-lucinete-loja.lp3jkk.easypanel.host",
-    host: "localhost:3001",
-    // schemes: ["https"],
+    host: "projetos-api-lucinete-loja.lp3jkk.easypanel.host",
+    // host: "localhost:3001",
+    schemes: ["https"],
     components: {
         schemas: {
             produtos: {
@@ -37,7 +37,8 @@ const routes = ['./routes/AuthRoute.js',
                 './routes/UsuarioRoute.js',
                 './routes/CategoriaRoute.js',
                  './routes/ProdutoRoute.js',
-                './routes/VendaRoute.js']
+                './routes/VendaRoute.js',
+                './routes/RelatorioRoute.js'];
 
 swaggerAutogen({openapi: '3.0.0', autoHeaders: false})(outputJson, routes, doc)
 .then( async () => {
