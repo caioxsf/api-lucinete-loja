@@ -6,6 +6,7 @@ import ProdutoRoute from './routes/ProdutoRoute.js';
 import VendaRoute from './routes/VendaRoute.js';
 import AuthRoute from './routes/AuthRoute.js';
 import CategoriaRoute from './routes/CategoriaRoute.js';
+import RelatorioRoute from './routes/RelatorioRoute.js';
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -22,6 +23,7 @@ app.use('/', ProdutoRoute);
 app.use('/', VendaRoute);
 app.use('/', AuthRoute);
 app.use('/', CategoriaRoute);
+app.use('/', RelatorioRoute);
 
 
 app.listen(3001, function() {

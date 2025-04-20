@@ -1,0 +1,19 @@
+import RelatorioRepository from "../repositories/RelatorioRepository.js"
+
+export default class RelatorioController {
+
+    #repoRelatorio
+    constructor() {
+        this.#repoRelatorio = new RelatorioRepository();
+    }
+
+    async ProdutosMaisVendidos(req, res) {
+        let produtos = await this.#repoRelatorio.ProdutosMaisVendidos();
+        if(produtos != null) {
+            res.status(200).json(produtos);
+        } else {
+            res.status(404).json({msg: "Nenhum produto encontrado"});
+        }
+    }
+
+}
