@@ -710,7 +710,7 @@
         "tags": [
           "Venda"
         ],
-        "summary": "Endpoint para listar todas as vendas teste",
+        "summary": "Endpoint para listar todas as vendas",
         "description": "",
         "responses": {
           "200": {
