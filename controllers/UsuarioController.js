@@ -34,7 +34,8 @@ export default class UsuarioController {
                         var senhaHash = await hashSenha(senha);
 
                         if (await this.#repoRegistroUsuario.CadastrarUsuario(usuario, senhaHash, idRegistroUsuario)) {
-                            if(await EnviarLogin(email, usuario, senha, nome)) {
+                            let login = await EnviarLogin(email, usuario, senha, nome)
+                            if(login == true) {
                                 await banco.Commit();
                                 return res.status(201).json({ msg: "Conta criada com sucesso!" });
                             } else {
@@ -149,5 +150,9 @@ async function EnviarLogin(email, usuario, senha, nome) {
         `
     };
 
-    await trasporter.sendMail(mailOptions)
+    let resultado = await trasporter.sendMail(mailOptions)
+    if(resultado.response != undefined)
+        return true;
+    else
+        return false;
 }
