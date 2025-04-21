@@ -139,9 +139,9 @@ export default class UsuarioRepository {
         return lista;
     }
 
-    async ValidarAcesso(usuario, senha) {
+    async ValidarAcesso(usuario, hash) {
         let sql = `SELECT * FROM luci_usuarios WHERE usu_usuario = ? AND usu_senha = ?`;
-        let valores = [usuario, senha];
+        let valores = [usuario, hash];
         let rows = await this.#banco.ExecutaComando(sql, valores);
         let lista = [];
         if (rows.length > 0) {
@@ -164,5 +164,12 @@ export default class UsuarioRepository {
         if(resultado.length > 0)
             return false;
         return true;
+    }
+
+    async RetornarHash(usuario) {
+        let sql = `SELECT usu_senha FROM luci_usuarios WHERE usu_usuario = ?`;
+        let valores = [usuario];
+        let resultado = await this.#banco.ExecutaComando(sql, valores);
+        return resultado[0].usu_senha;
     }
 }
