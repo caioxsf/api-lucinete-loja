@@ -730,12 +730,37 @@
         ]
       }
     },
-    "/relatorio": {
+    "/relatorio/produtos-mais-vendidos": {
       "get": {
         "tags": [
           "Relatorio"
         ],
         "summary": "Endpoint para listar os produtos mais vendidos",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/relatorio/produtos-menos-vendidos": {
+      "get": {
+        "tags": [
+          "Relatorio"
+        ],
+        "summary": "Endpoint para listar os produtos menos vendidos",
         "description": "",
         "responses": {
           "200": {

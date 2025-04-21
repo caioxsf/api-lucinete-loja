@@ -6,13 +6,22 @@ const router = express.Router();
 let auth = new AuthMiddleware();
 let ctrl = new RelatorioController()
 
-router.get('/relatorio', auth.validar, (req, res) => {
+router.get('/relatorio/produtos-mais-vendidos', auth.validar, (req, res) => {
     /* #swagger.security = [{
         "bearerAuth": []
     }] */
     // #swagger.tags = ["Relatorio"]
     // #swagger.summary = "Endpoint para listar os produtos mais vendidos"
     ctrl.ProdutosMaisVendidos(req,res);
+})
+
+router.get('/relatorio/produtos-menos-vendidos', auth.validar, (req, res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
+    // #swagger.tags = ["Relatorio"]
+    // #swagger.summary = "Endpoint para listar os produtos menos vendidos"
+    ctrl.ProdutosMenosVendidos(req,res);
 })
 
 export default router;

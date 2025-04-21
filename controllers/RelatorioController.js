@@ -16,4 +16,13 @@ export default class RelatorioController {
         }
     }
 
+    async ProdutosMenosVendidos(req, res) {
+        let produtos = await this.#repoRelatorio.ProdutosMenosVendido();
+        if(produtos != null) {
+            res.status(200).json(produtos);
+        } else {
+            res.status(404).json({msg: "Nenhum produto encontrado"});
+        }
+    }
+
 }
