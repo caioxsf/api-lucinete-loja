@@ -2,6 +2,8 @@ import Database from "../db/database.js";
 import RegistroUsuarioEntity from "../entities/RegistroUsuarioEntity.js";
 import UsuarioRepository from "../repositories/UsuarioRepository.js"
 import nodemailer from 'nodemailer';
+import { hashSenha, compararSenha } from "../utils/bcrypt/bcrypt.js";
+
 
 export default class UsuarioController {
 
@@ -29,7 +31,9 @@ export default class UsuarioController {
                         let usuario = nomeMinusculo + Math.floor(Math.random() * 900000);
                         let senha = Math.floor(Math.random() * 900000) + 100000;
 
-                        if (await this.#repoRegistroUsuario.CadastrarUsuario(usuario, senha, idRegistroUsuario)) {
+                        var senhaHash = await hashSenha(senha);
+
+                        if (await this.#repoRegistroUsuario.CadastrarUsuario(usuario, senhaHash, idRegistroUsuario)) {
                             if(await EnviarLogin(email, usuario, senha, nome)) {
                                 await banco.Commit();
                                 return res.status(201).json({ msg: "Conta criada com sucesso!" });
@@ -49,7 +53,7 @@ export default class UsuarioController {
                 return res.status(400).json({ msg: "Corpo da requisisão não está adequado!" })
         } catch (ex) {
             await banco.Rollback();
-            return res.status(400).json({ msg: "Erro interno no servidor!" })
+            return res.status(400).json({ msg: "Erro interno no servidor!", error: ex.message})
         }
     }
 
