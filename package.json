@@ -14,7 +14,7 @@
   },
   "scripts": {
     "swagger": "node swagger.js",
-    "start": "node server.js"
+    "start": "node swagger.js"
   },
   "name": "pfs2",
   "version": "1.0.0",
