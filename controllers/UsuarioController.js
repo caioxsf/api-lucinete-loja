@@ -34,13 +34,10 @@ export default class UsuarioController {
                         var senhaHash = await hashSenha(senha);
 
                         if (await this.#repoRegistroUsuario.CadastrarUsuario(usuario, senhaHash, idRegistroUsuario)) {
-                            let login = await EnviarLogin(email, usuario, senha, nome)
-                            if(login == true) {
+                            if(await EnviarLogin(email, usuario, senha, nome)) {
                                 await banco.Commit();
                                 return res.status(201).json({ msg: "Conta criada com sucesso!" });
-                            } else {
-                                return res.status(400).json({msg: "Esse endereço de email não existe!"})
-                            }
+                            } 
                         }
                         else
                             throw new Error("Erro ao inserir conta no banco de dados");
@@ -150,9 +147,6 @@ async function EnviarLogin(email, usuario, senha, nome) {
         `
     };
 
-    let resultado = await trasporter.sendMail(mailOptions)
-    if(resultado.response != undefined)
-        return true;
-    else
-        return false;
+    await trasporter.sendMail(mailOptions)
+   
 }
