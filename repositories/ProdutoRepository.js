@@ -89,7 +89,7 @@ export default class ProdutoRepository {
     }
 
     async AdicionarEstoque (quantidade, id) {
-        let sql = `UPDATE luci_produtos SET prod_estoque = prod_estoque + prod_estoque ? WHERE prod_id = ?`;
+        let sql = `UPDATE luci_produtos SET prod_estoque = prod_estoque + ? WHERE prod_id = ?`;
         let valores = [quantidade,id];
         let resultado = await this.#banco.ExecutaComandoNonQuery(sql,valores);
         return resultado;
