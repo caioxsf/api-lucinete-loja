@@ -15,7 +15,12 @@ const outputJson = require("./swagger-output.json");
 import swaggerUi from 'swagger-ui-express';
 dotenv.config();
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000', // Permite apenas o frontend em localhost:3000
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos (incluindo Authorization para o token JWT)
+    credentials: true, // Permite envio de cookies ou credenciais, se necessário
+}));
 app.use(express.json());
 
 //página de documentação
