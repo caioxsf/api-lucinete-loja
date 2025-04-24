@@ -50,8 +50,8 @@ export default class ProdutoController {
             let entidade = new ProdutoEntity();
             entidade.id = id;
             entidade.estoque = quantidade;
-            let produto = await this.#repoProduto.Obter(id);
-            if(produto.length > 0) {
+            // let produto = ;
+            if(await this.#repoProduto.Obter(id)) {
                 if(await this.#repoProduto.AdicionarEstoque(quantidade,id)) 
                     return res.status(200).json({message: "Estoque do produto atualizado!"})
                 else 
