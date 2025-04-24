@@ -44,6 +44,26 @@ export default class ProdutoController {
             return res.status(400).json({ msg: "Parâmetros invalidos!" })
     }
 
+    async AdicionarEstoque (req,res) {
+        let {id, quantidade} = req.body;
+        if(id && quantidade) {
+            let entidade = new ProdutoEntity();
+            entidade.id = id;
+            entidade.estoque = quantidade;
+            let produto = await this.#repoProduto.Obter(id);
+            if(produto == true) {
+                if(await this.#repoProduto.AdicionarEstoque(quantidade,id)) 
+                    return res.status(200).json({message: "Estoque do produto atualizado!"})
+                else 
+                    throw new Error("Erro ao adicionar estoque do produto!")
+            } else {
+                return res.status(404).json({message: "Esse produto não existe!"})
+            }
+        } else {
+            return res.status(400).json({message: "Parâmetros invalidos!"})
+        }
+    }
+
     async Obter(req, res) {
         let { id } = req.params;
         let produtos = await this.#repoProduto.Obter(id);

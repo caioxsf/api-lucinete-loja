@@ -88,6 +88,13 @@ export default class ProdutoRepository {
         return null;
     }
 
+    async AdicionarEstoque (quantidade, id) {
+        let sql = `UPDATE luci_produtos SET prod_estoque = ? WHERE prod_id = ?`;
+        let valores = [quantidade,id];
+        let resultado = await this.#banco.ExecutaComandoNonQuery(sql,valores);
+        return resultado;
+    }
+
     async ProdutosEstoqueMedio () {
         let sql = `SELECT * FROM luci_produtos WHERE prod_estoque >= 10 AND prod_estoque < 50`;
         let row = await this.#banco.ExecutaComando(sql);

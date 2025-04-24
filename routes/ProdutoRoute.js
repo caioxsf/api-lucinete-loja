@@ -82,6 +82,15 @@ router.put('/produtos', auth.validar, (req,res) => {
     ctrl.AlterarProduto(req,res);
 })
 
+router.patch('/produtos', auth.validar, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
+    // #swagger.tags = ["Produtos"]
+    // #swagger.summary = "Endpont para alterar um produto"
+   ctrl.AdicionarEstoque(req,res);
+})
+
 router.get('/produtos/:id', auth.validar, (req,res) => {
     /* #swagger.security = [{
         "bearerAuth": []
