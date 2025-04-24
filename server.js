@@ -20,6 +20,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Métodos permitidos
     allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos (incluindo Authorization para o token JWT)
     credentials: true, // Permite envio de cookies ou credenciais, se necessário
+    optionsSuccessStatus: 204,
 }));
 app.use(express.json());
 
