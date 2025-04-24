@@ -1,5 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv';
+import cors from 'cors'
 // Rotas
 import UsuarioRoute from './routes/UsuarioRoute.js';
 import ProdutoRoute from './routes/ProdutoRoute.js';
@@ -14,6 +15,7 @@ const outputJson = require("./swagger-output.json");
 import swaggerUi from 'swagger-ui-express';
 dotenv.config();
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 //página de documentação
