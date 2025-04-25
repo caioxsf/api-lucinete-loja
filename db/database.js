@@ -9,9 +9,9 @@ export default class Database {
     constructor() {
 
         this.#conexao = mysql.createPool({
-            host: process.env.DB_HOST, //endereço do nosso banco de dados na nuvem
-            database: process.env.DB_NAME, //a database de cada um de vocês possui a nomenclatura DB_(RA)
-            user: process.env.DB_USER, // usuario e senha de cada um de vocês é o RA
+            host: process.env.DB_HOST, 
+            database: process.env.DB_NAME, 
+            user: process.env.DB_USER, 
             password: process.env.DB_PASSWORD,
             port: process.env.DB_PORT
         });
