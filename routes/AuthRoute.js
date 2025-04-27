@@ -7,7 +7,7 @@ const router = express.Router();
 let auth = new AuthMiddleware();
 let ctrl = new AutenticacaoController();
 
-router.post('/auth/token', (req,res) => {
+router.post('/auth/login', (req,res) => {
     // #swagger.tags = ['Autenticação']
     // #swagger.summary = "Gera um JWT para validação de acesso"
     
