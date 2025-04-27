@@ -133,4 +133,24 @@ export default class ProdutoRepository {
         return null;
     }
 
+    async VerificarEstoqueParaCarrinho (idProduto, quantidade) {
+        let sql = `SELECT * FROM luci_produtos WHERE prod_id = ? AND prod_estoque >= ?`;
+        let valores = [idProduto, quantidade];
+        let rows = await this.#banco.ExecutaComando(sql, valores);
+        if (rows.length > 0) {
+            return true;
+        } else
+            return false;
+    }
+
+    async PegaQuantidadeProdutoCarrinho (idProduto) {
+        let sql = `SELECT car_quantidade FROM luci_carrinho WHERE car_produto = ?`;
+        let valores = [idProduto];
+        let rows = await this.#banco.ExecutaComando(sql, valores);
+        if (rows.length > 0) {
+            return rows[0]['car_quantidade'];
+        } else
+            return null;
+    }
+
 }

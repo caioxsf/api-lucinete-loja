@@ -37,8 +37,10 @@ const routes = ['./routes/AuthRoute.js',
                 './routes/UsuarioRoute.js',
                 './routes/CategoriaRoute.js',
                  './routes/ProdutoRoute.js',
+                 './routes/CarrinhoRoute.js',
                 './routes/VendaRoute.js',
-                './routes/RelatorioRoute.js'];
+                './routes/RelatorioRoute.js',
+                ];
 
 swaggerAutogen({openapi: '3.0.0', autoHeaders: false})(outputJson, routes, doc)
 .then( async () => {
