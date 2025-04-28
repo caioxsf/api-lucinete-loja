@@ -1,5 +1,6 @@
 import Database from "../db/database.js";
 import ItensVendaEntity from "../entities/ItensVendaEntity.js";
+import CarrinhoRepository from "../repositories/CarrinhoRepository.js";
 import VendaRepository from "../repositories/VendaRepository.js"
 
 export default class VendaController {
@@ -10,57 +11,46 @@ export default class VendaController {
     }
 
     async VenderProdutos(req, res) {
+        let carrinhoRepo = new CarrinhoRepository();
+        let carrinho = await carrinhoRepo.ExibirCarrinho(req.usuarioLogado.id);
+        if (carrinho.length > 0) {
+            let vendaGerada = await this.#repoVenda.GerarVenda(new Date(), carrinho[0].total);
+            if (vendaGerada) {
+                let entidade = new ItensVendaEntity();
+                let total = 0;
+                for (let i = 1; i < carrinho.length; i++) {
+                    let produto = carrinho[i];
+                    let preco = produto.preco;
+                    let quantidade = produto.quantidade;
+                    let subtotal = quantidade * preco;
+                    total += subtotal;
+                    entidade.item_quantidade = parseInt(quantidade);
+                    entidade.item_preco = parseFloat(preco);
+                    entidade.ven_id = vendaGerada;
+                    entidade.item_subtotal = subtotal;
+                    entidade.prod_id = produto.id_produto;
 
-        let banco = new Database();
-        
-        try {
-            await banco.AbreTransacao();
-            this.#repoVenda.banco = banco;
-
-            let data = new Date();
-            let idVenda = await this.#repoVenda.GerarVenda(data);
-            let total = 0;
-
-            if (idVenda) {
-                for (let i = 0; i < req.body.length; i++) {
-                    let entidade = new ItensVendaEntity();
-                    let { quantidade, produto_id } = req.body[i];
-
-                    if (await this.#repoVenda.VerificarCodigoProduto(produto_id)) {
-                        let resultadoPreco = await this.#repoVenda.BuscarPrecoDoProduto(produto_id);
-                        let preco = resultadoPreco.id;
-                        entidade.item_quantidade = parseInt(quantidade);
-                        entidade.item_preco = parseFloat(preco);
-                        entidade.ven_id = idVenda;
-                        entidade.item_subtotal = entidade.item_quantidade * parseFloat(preco);
-                        entidade.prod_id = produto_id;
-
-                        total += entidade.item_subtotal;
-
-                        if (await this.#repoVenda.VerificarEstoque(produto_id, quantidade)) {
-                            await this.#repoVenda.AtualizarEstoqueDoProduto(quantidade, produto_id);
-                            await this.#repoVenda.CadastrarVenda(entidade);
-                        } else
-                            return res.status(404).json({msg: `Estoque do produto ${produto_id} insuficiente!`})
+                    if (await this.#repoVenda.VerificarEstoque(produto.id_produto, quantidade)) {
+                        await this.#repoVenda.AtualizarEstoqueDoProduto(quantidade, produto.id_produto);
+                        await this.#repoVenda.CadastrarVenda(entidade);
+                        await carrinhoRepo.LimparCarrinho(req.usuarioLogado.id);
                     } else
-                        return res.status(404).json({msg: `Codigo do produto inexistente!`})
+                        return res.status(404).json({ message: `Estoque do produto ${produto.id_produto} insuficiente!` })
                 }
-                await this.#repoVenda.AtualizarTotalVenda(total, idVenda);
-                await banco.Commit();
-                return res.status(200).json({ msg: "Venda registrada com sucesso!" })
+                return res.status(201).json({ message: "Venda registrada com sucesso!" })
+            } else {
+                return res.status(500).json({ message: "Erro ao gerar venda!" })
             }
-        } catch (ex) {
-            await banco.Rollback();
-            return res.status(500).json({msg: "Erro interno no servidor"})
+        } else {
+            return res.status(404).json({ message: "Nenhum produto encontrado no carrinho!" })
         }
-
     }
 
-    async ListarVendas (req, res) {
+    async ListarVendas(req, res) {
         let vendas = await this.#repoVenda.ListarVendas();
-        if(vendas != null)
+        if (vendas != null)
             return res.status(200).json(vendas)
-        return res.status(404).json({msg: "Nenhuma venda foi encontrada"})
+        return res.status(404).json({ message: "Nenhuma venda foi encontrada" })
     }
 
 }

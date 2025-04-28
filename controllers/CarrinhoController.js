@@ -55,7 +55,7 @@ export default class CarrinhoController {
                         }
                         throw new Error("Erro ao aumentar quantidade do produto!");
                     } else {
-                        return res.status(400).json({ message: "Produto fora de estoque!" });
+                        return res.status(400).json({ message: "Quantidade fora de estoque!" });
                     }
                 }
             } else 
