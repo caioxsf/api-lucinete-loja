@@ -24,9 +24,9 @@ export default class VendaRepository {
         return null;
     }
 
-    async GerarVenda(data) {
-        let sql = `INSERT INTO luci_vendas (ven_data) VALUES (?)`;
-        let valores = [data];
+    async GerarVenda(data, total) {
+        let sql = `INSERT INTO luci_vendas (ven_data, ven_total) VALUES (?,?)`;
+        let valores = [data, total];
         let resultado = await this.#banco.ExecutaComandoLastInserted(sql, valores);
         return resultado;
     }

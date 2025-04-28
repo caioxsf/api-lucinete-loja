@@ -50,6 +50,9 @@ export default class CarrinhoRepository {
         let rows = await this.#database.ExecutaComando(sql,valores);
         let lista = [];
         if(rows.length > 0) {
+            lista.push({
+                total: rows[0]['total']
+            })
             for(let i=0;i<rows.length;i++) {
                 let row = rows[i];
                 lista.push({
@@ -61,9 +64,7 @@ export default class CarrinhoRepository {
                     quantidade: row['car_quantidade'],
                 })
             }
-            lista.push({
-                total: rows[0]['total']
-            })
+            
             return lista;
         } 
         return null;
@@ -101,5 +102,12 @@ export default class CarrinhoRepository {
             return rows[0]['total'];
         } 
         return null;
+    }
+
+    async LimparCarrinho(idUsuario) {
+        let sql = `DELETE FROM luci_carrinho WHERE car_usuario = ?`;
+        let valores = [idUsuario];
+        let resultado = await this.#database.ExecutaComandoNonQuery(sql,valores);
+        return resultado;
     }
 }

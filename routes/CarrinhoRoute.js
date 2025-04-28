@@ -1,9 +1,11 @@
 import express from 'express';
 const router = express.Router();
 import CarrinhoController from '../controllers/CarrinhoController.js';
+import VendaController from '../controllers/VendaController.js';
 import AuthMiddleware from '../middlewares/authMiddleware.js';
 
 let ctrl = new CarrinhoController();
+let ctrlVenda = new VendaController();
 let auth = new AuthMiddleware()
 
 router.post('/carrinho', auth.validar, (req,res) => {
@@ -16,6 +18,17 @@ router.post('/carrinho', auth.validar, (req,res) => {
     
     ctrl.AdicionarProdutoCarrinho(req,res);
 })
+
+router.post('/carrinho/checkout', auth.validarCliente, (req, res) => {
+    /* #swagger.security = [{
+            "bearerAuth": []
+        }] */
+    // #swagger.tags = ["Carrinho"]
+    // #swagger.summary = "Endpoint para gerar e vender produtos"
+    
+    ctrlVenda.VenderProdutos(req, res);
+})
+
 
 router.get('/carrinho', auth.validar, (req,res) => {
     /* #swagger.security = [{
