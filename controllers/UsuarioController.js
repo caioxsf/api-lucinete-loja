@@ -36,7 +36,7 @@ export default class UsuarioController {
                         if (await this.#repoRegistroUsuario.CadastrarUsuario(usuario, senhaHash, idRegistroUsuario)) {
                             if(await EnviarLogin(email, usuario, senha, nome)) {
                                 await banco.Commit();
-                                return res.status(201).json({ msg: "Conta criada com sucesso!" });
+                                return res.status(201).json({ message: "Conta criada com sucesso!" });
                             } 
                         }
                         else
@@ -44,14 +44,14 @@ export default class UsuarioController {
                     } else
                         throw new Error("Erro ao inserir registro de conta no banco de dados")
                 } else
-                    return res.status(409).json({msg: "Já existe uma conta cadastrada com esse e-mail!"})
+                    return res.status(409).json({message: "Já existe uma conta cadastrada com esse e-mail!"})
 
 
             } else
-                return res.status(400).json({ msg: "Corpo da requisisão não está adequado!" })
+                return res.status(400).json({ message: "Corpo da requisisão não está adequado!" })
         } catch (ex) {
             await banco.Rollback();
-            return res.status(400).json({ msg: "Erro interno no servidor!", error: ex.message})
+            return res.status(400).json({ message: "Erro interno no servidor!", error: ex.message})
         }
     }
 
@@ -62,15 +62,15 @@ export default class UsuarioController {
                 let entidade = new RegistroUsuarioEntity(id, nome, sobrenome, email, cpf, nascimento);
                 if (await this.#repoRegistroUsuario.Obter(id) != null) {
                     if (await this.#repoRegistroUsuario.AlterarUsuario(entidade))
-                        return res.status(200).json({ msg: "Conta do usuario alterada com sucesso!" })
+                        return res.status(200).json({ message: "Conta do usuario alterada com sucesso!" })
                     else
                         throw new Error("Erro ao alterar usuario no banco de dados!")
                 } else
-                    return res.status(404).json({ msg: "Nenhum usuario foi encontrado com esse ID!" })
+                    return res.status(404).json({ message: "Nenhum usuario foi encontrado com esse ID!" })
             } else
                 return res.status(500).json("Você não pode alterar as informações desse usuario!")
         } else
-            return res.status(400).json({ msg: "Parâmetros invalidos!" })
+            return res.status(400).json({ message: "Parâmetros invalidos!" })
     }
 
     async DeletarUsuario(req, res) {
@@ -83,21 +83,21 @@ export default class UsuarioController {
             if (array_re_id != null || array_re_id != undefined) {
                 if (await this.#repoRegistroUsuario.DeletarUsuarioLogin(id)) {
                     if (await this.#repoRegistroUsuario.DeletarUsuario(re_id)) {
-                        return res.status(200).json({ msg: "Usuario deletado com sucesso!" })
+                        return res.status(200).json({ message: "Usuario deletado com sucesso!" })
                     } else
                         throw new Error("Erro ao deletar usuario do banco de dados")
                 }
             } else
-                return res.status(404).json({ msg: "Nenhum usuario encontrado!" })
+                return res.status(404).json({ message: "Nenhum usuario encontrado!" })
         } else
-            return res.status(404).json({ msg: "Nenhum usuario encontrado!" })
+            return res.status(404).json({ message: "Nenhum usuario encontrado!" })
     }
 
     async ObterUsuario(req, res) {
         let { id } = req.params;
         let usuario = await this.#repoRegistroUsuario.ObterComUsuario(id);
         if (usuario === null)
-            return res.status(404).json({ msg: "Nenhum usuario encontrado!" })
+            return res.status(404).json({ message: "Nenhum usuario encontrado!" })
         else
             return res.status(201).json(usuario);
     }
@@ -106,7 +106,7 @@ export default class UsuarioController {
     async ListarUsuarios(req, res) {
         let usuarios = await this.#repoRegistroUsuario.ListarUsuarios();
         if (usuarios === null)
-            return res.status(404).json({ msg: "Nenhum usuario foi encontrado!" })
+            return res.status(404).json({ message: "Nenhum usuario foi encontrado!" })
         return res.status(200).json(usuarios)
     }
 

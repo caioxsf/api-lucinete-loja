@@ -18,14 +18,14 @@ export default class ProdutoController {
             let entidade = new ProdutoEntity(0, nome, estoque, preco, new CategoriaEntity(categoria.id));
             if (await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id) == true) {
                 if (await this.#repoProduto.CadastrarProduto(entidade))
-                    return res.status(201).json({ msg: "Produto cadastrado com sucesso!" })
+                    return res.status(201).json({ message: "Produto cadastrado com sucesso!" })
                 else
                     throw new Error("Erro ao inserir produto no banco de dados")
             } else
-                return res.status(400).json({ msg: "A categoria do produto não existe!" })
+                return res.status(400).json({ message: "A categoria do produto não existe!" })
 
         } else
-            return res.status(400).json({ msg: "Parâmetros invalidos!" })
+            return res.status(400).json({ message: "Parâmetros invalidos!" })
     }
 
     async AlterarProduto(req, res) {
@@ -34,14 +34,14 @@ export default class ProdutoController {
             let entidade = new ProdutoEntity(id, nome, estoque, preco, new CategoriaEntity(categoria.id));
             if (await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id) == true) {
                 if (await this.#repoProduto.AlterarProduto(entidade))
-                    return res.status(201).json({ msg: "Produto alterado com sucesso!" })
+                    return res.status(201).json({ message: "Produto alterado com sucesso!" })
                 else
-                    return res.status(400).json({msg: "Esse produto não existe!"})
+                    return res.status(400).json({message: "Esse produto não existe!"})
             } else
-                return res.status(400).json({ msg: "A categoria do produto não existe!" })
+                return res.status(400).json({ message: "A categoria do produto não existe!" })
 
         } else
-            return res.status(400).json({ msg: "Parâmetros invalidos!" })
+            return res.status(400).json({ message: "Parâmetros invalidos!" })
     }
 
     async AdicionarEstoque (req,res) {
@@ -69,18 +69,18 @@ export default class ProdutoController {
         let produtos = await this.#repoProduto.Obter(id);
         if (produtos != null)
             return res.status(200).json(produtos);
-        return res.status(404).json({ msg: "Nenhum produto foi encontrado" })
+        return res.status(404).json({ message: "Nenhum produto foi encontrado" })
     }
 
     async Deletar(req, res) {
         let { id } = req.params;
         if (await this.#repoProduto.Obter(id)) {
             if (await this.#repoProduto.Deletar(id))
-                return res.status(200).json({ msg: "Produto deletado com sucesso" })
+                return res.status(200).json({ message: "Produto deletado com sucesso" })
             else
                 throw new Error("Erro ao deletar usuario do banco de dados")
         } else
-            return res.status(404).json({ msg: "Produto nao encontrado!" })
+            return res.status(404).json({ message: "Produto nao encontrado!" })
 
     }
 
@@ -89,7 +89,7 @@ export default class ProdutoController {
         if (produtos != null)
             return res.status(200).json(produtos);
         else
-            return res.status(404).json({ msg: "Nenhum produto foi encontrado!" })
+            return res.status(404).json({ message: "Nenhum produto foi encontrado!" })
     }
 
     async ProdutosEstoqueBaixo(req, res) {
@@ -97,7 +97,7 @@ export default class ProdutoController {
         if (produtos != null)
             return res.status(200).json(produtos)
         else
-            return res.status(404).json({ msg: "Nenhum produto com estoque baixo!" })
+            return res.status(404).json({ message: "Nenhum produto com estoque baixo!" })
     }
 
     async ProdutosEstoqueMedio(req, res) {
@@ -105,7 +105,7 @@ export default class ProdutoController {
         if (produtos != null)
             return res.status(200).json(produtos)
         else
-            return res.status(404).json({ msg: "Nenhum produto com estoque razoavel!" })
+            return res.status(404).json({ message: "Nenhum produto com estoque razoavel!" })
     }
 
     async ProdutosEstoqueAlto(req, res) {
@@ -113,7 +113,7 @@ export default class ProdutoController {
         if (produtos != null)
             return res.status(200).json(produtos)
         else
-            return res.status(404).json({ msg: "Nenhum produto com estoque razoavel!" })
+            return res.status(404).json({ message: "Nenhum produto com estoque razoavel!" })
     }
 
 
