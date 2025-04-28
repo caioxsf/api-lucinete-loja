@@ -8,7 +8,7 @@ let ctrl = new CarrinhoController();
 let ctrlVenda = new VendaController();
 let auth = new AuthMiddleware()
 
-router.post('/carrinho', auth.validar, (req,res) => {
+router.post('/carrinho', auth.validarCliente, (req,res) => {
     /* #swagger.security = [{
         "bearerAuth": []
     }] */
@@ -30,7 +30,7 @@ router.post('/carrinho/checkout', auth.validarCliente, (req, res) => {
 })
 
 
-router.get('/carrinho', auth.validar, (req,res) => {
+router.get('/carrinho', auth.validarCliente, (req,res) => {
     /* #swagger.security = [{
         "bearerAuth": []
     }] */
@@ -41,7 +41,7 @@ router.get('/carrinho', auth.validar, (req,res) => {
     ctrl.ExibirCarrinho(req,res);
 })
 
-router.patch('/carrinho/aumentar/:id', auth.validar, (req,res) => {
+router.patch('/carrinho/aumentar/:id', auth.validarCliente, (req,res) => {
     /* #swagger.security = [{
         "bearerAuth": []
     }] */
@@ -52,7 +52,7 @@ router.patch('/carrinho/aumentar/:id', auth.validar, (req,res) => {
     ctrl.AumentarQuantidadeProduto(req,res);
 })
 
-router.patch('/carrinho/diminuir/:id', auth.validar, (req,res) => {
+router.patch('/carrinho/diminuir/:id', auth.validarCliente, (req,res) => {
     /* #swagger.security = [{
         "bearerAuth": []
     }] */
@@ -63,7 +63,7 @@ router.patch('/carrinho/diminuir/:id', auth.validar, (req,res) => {
     ctrl.DiminuirQuantidadeProduto(req,res);
 })
 
-router.delete('/carrinho/:id', auth.validar, (req,res) => {
+router.delete('/carrinho/:id', auth.validarCliente, (req,res) => {
     /* #swagger.security = [{
         "bearerAuth": []
     }] */
