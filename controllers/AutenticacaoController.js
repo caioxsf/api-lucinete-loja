@@ -8,7 +8,10 @@ export default class AutenticacaoController {
         let { usuario, senha } = req.body;
         if (usuario && senha) {
             let repoUsuario = new UsuarioRepository();
-            let hash = await repoUsuario.RetornarHash(usuario);
+            let hash = await repoUsuario.RetornarHash(usuario); 
+            if(hash == null)
+                return res.status(400).json({message: "Usuario/Senha incorretos!"})
+
             let senhaValida = await compararSenha(senha, hash);
             if(senhaValida == true) {
                 let usuarioValidado = await repoUsuario.ValidarAcesso(usuario, hash);
@@ -17,10 +20,11 @@ export default class AutenticacaoController {
                     let token = auth.gerarToken(usuarioValidado[0].id, usuarioValidado[0].usuario, usuarioValidado[0].perfil, usuarioValidado[0].registro_usuario)
                     return res.status(200).json({token: token});
                 } else
-                    return res.status(400).json({msg: "Usuario/Senha incorretos!"})
-                }
+                    return res.status(400).json({message: "Usuario/Senha incorretos!"})
+            } else
+                return res.status(400).json({message: "Usuario/Senha incorretos!"})
         } else
-            return res.status(400).json({msg: "Parâmetros usuario/senha incorretos!"})
+            return res.status(400).json({message: "Parâmetros usuario/senha incorretos!"})
     }
 
     async AuthUsuarioLogado (req,res) {
@@ -28,6 +32,6 @@ export default class AutenticacaoController {
         let usuario = await repoUsuario.ObterComUsuario(req.usuarioLogado.id);
         if(usuario != null)
             return res.status(200).json(usuario);
-        return res.status(404).json({msg: "Nenhum usuario encontrado!"});
+        return res.status(404).json({message: "Nenhum usuario encontrado!"});
     }
 }

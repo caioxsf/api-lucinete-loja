@@ -1,4 +1,3 @@
-import Database from "../db/database.js";
 import ItensVendaEntity from "../entities/ItensVendaEntity.js";
 import CarrinhoRepository from "../repositories/CarrinhoRepository.js";
 import VendaRepository from "../repositories/VendaRepository.js"

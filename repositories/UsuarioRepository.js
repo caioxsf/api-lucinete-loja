@@ -170,6 +170,8 @@ export default class UsuarioRepository {
         let sql = `SELECT usu_senha FROM luci_usuarios WHERE usu_usuario = ?`;
         let valores = [usuario];
         let resultado = await this.#banco.ExecutaComando(sql, valores);
-        return resultado[0].usu_senha;
+        if(resultado.length > 0)
+            return resultado[0]['usu_senha'];
+        return null;
     }
 }

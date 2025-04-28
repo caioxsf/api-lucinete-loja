@@ -12,7 +12,7 @@ export default class RelatorioController {
         if(produtos != null) {
             res.status(200).json(produtos);
         } else {
-            res.status(404).json({msg: "Nenhum produto encontrado"});
+            res.status(404).json({message: "Nenhum produto encontrado"});
         }
     }
 
@@ -21,7 +21,7 @@ export default class RelatorioController {
         if(produtos != null) {
             res.status(200).json(produtos);
         } else {
-            res.status(404).json({msg: "Nenhum produto encontrado"});
+            res.status(404).json({message: "Nenhum produto encontrado"});
         }
     }
 
