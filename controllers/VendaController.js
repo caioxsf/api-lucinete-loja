@@ -12,7 +12,7 @@ export default class VendaController {
     async VenderProdutos(req, res) {
         let carrinhoRepo = new CarrinhoRepository();
         let carrinho = await carrinhoRepo.ExibirCarrinho(req.usuarioLogado.id);
-        if (carrinho.length > 0) {
+        if (carrinho != null) {
             let vendaGerada = await this.#repoVenda.GerarVenda(new Date(), carrinho[0].total);
             if (vendaGerada) {
                 let entidade = new ItensVendaEntity();
