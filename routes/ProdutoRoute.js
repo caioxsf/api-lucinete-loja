@@ -91,6 +91,24 @@ router.patch('/produtos', auth.validar, (req,res) => {
    ctrl.AdicionarEstoque(req,res);
 })
 
+router.patch('/produtos/ativar/:id', auth.validar, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
+    // #swagger.tags = ["Produtos"]
+    // #swagger.summary = "Endpont para ativar um produto"
+   ctrl.AtivarProduto(req,res);
+})
+
+router.patch('/produtos/desativar/:id', auth.validar, (req,res) => {
+    /* #swagger.security = [{
+        "bearerAuth": []
+    }] */
+    // #swagger.tags = ["Produtos"]
+    // #swagger.summary = "Endpont para desativar um produto"
+   ctrl.DesativarProduto(req,res);
+})
+
 router.get('/produtos/:id', auth.validar, (req,res) => {
     /* #swagger.security = [{
         "bearerAuth": []
@@ -99,16 +117,5 @@ router.get('/produtos/:id', auth.validar, (req,res) => {
     // #swagger.summary = "Endpont para obter um produto pelo ID"
     ctrl.Obter(req,res);
 })
-
-router.delete('/produtos/:id', auth.validar, (req,res) => {
-    /* #swagger.security = [{
-        "bearerAuth": []
-    }] */
-    // #swagger.tags = ["Produtos"]
-    // #swagger.summary = "Endpont para deletar um produto pelo ID"
-    ctrl.Deletar(req,res);
-})
-
-
 
 export default router;

@@ -1,5 +1,6 @@
 import CategoriaEntity from "../entities/CategoriaEntity.js";
 import ProdutoEntity from "../entities/ProdutoEntity.js";
+import CarrinhoRepository from "../repositories/CarrinhoRepository.js";
 import CategoriaRepository from "../repositories/CategoriaRepository.js";
 import ProdutoRepository from "../repositories/ProdutoRepository.js"
 
@@ -7,15 +8,16 @@ export default class ProdutoController {
 
     #repoProduto
     #repoCategoria
+    #repoCarrinho
     constructor() {
         this.#repoCategoria = new CategoriaRepository();
         this.#repoProduto = new ProdutoRepository();
+        this.#repoCarrinho = new CarrinhoRepository();
     }
 
     async CadastrarProduto(req, res) {
-        let { nome, estoque, preco, categoria } = req.body;
         if (nome && estoque && preco > 0 && categoria.id) {
-            let entidade = new ProdutoEntity(0, nome, estoque, preco, new CategoriaEntity(categoria.id));
+            let entidade = new ProdutoEntity(0, nome, estoque, preco, 1, new CategoriaEntity(categoria.id));
             if (await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id) == true) {
                 if (await this.#repoProduto.CadastrarProduto(entidade))
                     return res.status(201).json({ message: "Produto cadastrado com sucesso!" })
@@ -36,7 +38,7 @@ export default class ProdutoController {
                 if (await this.#repoProduto.AlterarProduto(entidade))
                     return res.status(201).json({ message: "Produto alterado com sucesso!" })
                 else
-                    return res.status(400).json({message: "Esse produto não existe!"})
+                    return res.status(400).json({ message: "Esse produto não existe!" })
             } else
                 return res.status(400).json({ message: "A categoria do produto não existe!" })
 
@@ -44,23 +46,23 @@ export default class ProdutoController {
             return res.status(400).json({ message: "Parâmetros invalidos!" })
     }
 
-    async AdicionarEstoque (req,res) {
-        let {id, quantidade} = req.body;
-        if(id && quantidade) {
+    async AdicionarEstoque(req, res) {
+        let { id, quantidade } = req.body;
+        if (id && quantidade) {
             let entidade = new ProdutoEntity();
             entidade.id = id;
             entidade.estoque = quantidade;
-            // let produto = ;
-            if(await this.#repoProduto.Obter(id)) {
-                if(await this.#repoProduto.AdicionarEstoque(quantidade,id)) 
-                    return res.status(200).json({message: "Estoque do produto atualizado!"})
-                else 
+            
+            if (await this.#repoProduto.Obter(id)) {
+                if (await this.#repoProduto.AdicionarEstoque(quantidade, id))
+                    return res.status(200).json({ message: "Estoque do produto atualizado!" })
+                else
                     throw new Error("Erro ao adicionar estoque do produto!")
             } else {
-                return res.status(404).json({message: "Esse produto não existe!"})
+                return res.status(404).json({ message: "Esse produto não existe!" })
             }
         } else {
-            return res.status(400).json({message: "Parâmetros invalidos!"})
+            return res.status(400).json({ message: "Parâmetros invalidos!" })
         }
     }
 
@@ -72,16 +74,28 @@ export default class ProdutoController {
         return res.status(404).json({ message: "Nenhum produto foi encontrado" })
     }
 
-    async Deletar(req, res) {
+    async AtivarProduto(req, res) {
         let { id } = req.params;
-        if (await this.#repoProduto.Obter(id)) {
-            if (await this.#repoProduto.Deletar(id))
-                return res.status(200).json({ message: "Produto deletado com sucesso" })
-            else
-                throw new Error("Erro ao deletar usuario do banco de dados")
-        } else
-            return res.status(404).json({ message: "Produto nao encontrado!" })
+        if (await this.#repoProduto.ObterSemOpcaoDeAtivo(id) == null)
+            return res.status(404).json({ message: "Produto não encontrado!" })
 
+        if (await this.#repoProduto.AtivarProduto(id))
+            return res.status(200).json({ message: "Produto ativado com sucesso!" })
+        throw new Error("Erro ao ativar produto!")
+    }
+
+    async DesativarProduto(req, res) {
+        let { id } = req.params;
+        if (await this.#repoProduto.ObterSemOpcaoDeAtivo(id) == null)
+            return res.status(404).json({ message: "Produto não encontrado!" })
+
+        if(await this.#repoCarrinho.VerificarProdutoCarrinho(id, req.usuarioLogado.id) == true)
+            return res.status(400).json({message: "Não foi possível desativar esse produto! Ele já está adicionado em algum carrinho!"})
+
+        if (await this.#repoProduto.DesativarProduto(id))
+            return res.status(200).json({ message: "Produto desativado com sucesso!" })
+        else
+            throw new Error("Erro ao desativar produto!")
     }
 
     async ListarProdutos(req, res) {
