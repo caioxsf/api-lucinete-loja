@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://projetos-api-lucinete-loja.lp3jkk.easypanel.host/"
+      "url": "http://localhost:3001/"
     }
   ],
   "paths": {

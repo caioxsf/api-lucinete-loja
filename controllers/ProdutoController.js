@@ -16,6 +16,8 @@ export default class ProdutoController {
     }
 
     async CadastrarProduto(req, res) {
+        let { nome, estoque, preco, categoria } = req.body;
+
         if (nome && estoque && preco > 0 && categoria.id) {
             let entidade = new ProdutoEntity(0, nome, estoque, preco, 1, new CategoriaEntity(categoria.id));
             if (await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id) == true) {
@@ -32,38 +34,34 @@ export default class ProdutoController {
 
     async AlterarProduto(req, res) {
         let { id, nome, estoque, preco, categoria } = req.body;
-        if (id > 0 && nome && estoque && preco > 0 && categoria.id) {
-            let entidade = new ProdutoEntity(id, nome, estoque, preco, new CategoriaEntity(categoria.id));
-            if (await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id) == true) {
-                if (await this.#repoProduto.AlterarProduto(entidade))
-                    return res.status(201).json({ message: "Produto alterado com sucesso!" })
-                else
-                    return res.status(400).json({ message: "Esse produto não existe!" })
-            } else
-                return res.status(400).json({ message: "A categoria do produto não existe!" })
 
-        } else
+        if (id <= 0 || !nome || !estoque || preco <=0 || !categoria.id) 
             return res.status(400).json({ message: "Parâmetros invalidos!" })
+
+        let entidade = new ProdutoEntity(id, nome, estoque, preco, new CategoriaEntity(categoria.id))
+
+        if (!await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id))
+            return res.status(400).json({ message: "A categoria do produto não existe!" }) 
+
+        if (await this.#repoProduto.AlterarProduto(entidade))
+            return res.status(201).json({ message: "Produto alterado com sucesso!" })
+    
+        return res.status(400).json({ message: "Esse produto não existe!" })
     }
 
     async AdicionarEstoque(req, res) {
         let { id, quantidade } = req.body;
-        if (id && quantidade) {
-            let entidade = new ProdutoEntity();
-            entidade.id = id;
-            entidade.estoque = quantidade;
-            
-            if (await this.#repoProduto.Obter(id)) {
-                if (await this.#repoProduto.AdicionarEstoque(quantidade, id))
-                    return res.status(200).json({ message: "Estoque do produto atualizado!" })
-                else
-                    throw new Error("Erro ao adicionar estoque do produto!")
-            } else {
-                return res.status(404).json({ message: "Esse produto não existe!" })
-            }
-        } else {
+
+        if (!id || !quantidade) 
             return res.status(400).json({ message: "Parâmetros invalidos!" })
-        }
+            
+        if (!await this.#repoProduto.Obter(id)) 
+            return res.status(404).json({ message: "Esse produto não existe!" })
+
+        if (await this.#repoProduto.AdicionarEstoque(quantidade, id))
+            return res.status(200).json({ message: "Estoque do produto atualizado!" })
+        
+        return res.status(400).json({ message: "Não foi possível adicionar estoque ao produto!"})
     }
 
     async Obter(req, res) {
