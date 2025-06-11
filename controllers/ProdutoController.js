@@ -18,18 +18,18 @@ export default class ProdutoController {
     async CadastrarProduto(req, res) {
         let { nome, estoque, preco, categoria } = req.body;
 
-        if (nome && estoque && preco > 0 && categoria.id) {
-            let entidade = new ProdutoEntity(0, nome, estoque, preco, 1, new CategoriaEntity(categoria.id));
-            if (await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id) == true) {
-                if (await this.#repoProduto.CadastrarProduto(entidade))
-                    return res.status(201).json({ message: "Produto cadastrado com sucesso!" })
-                else
-                    throw new Error("Erro ao inserir produto no banco de dados")
-            } else
-                return res.status(400).json({ message: "A categoria do produto não existe!" })
-
-        } else
+        if (!nome || !estoque || preco <= 0 || !categoria.id)
             return res.status(400).json({ message: "Parâmetros invalidos!" })
+
+        let entidade = new ProdutoEntity(0, nome, estoque, preco, new CategoriaEntity(categoria.id), 1);
+
+        if (!await this.#repoCategoria.VerificarCategoriaPeloID(categoria.id))
+            return res.status(400).json({ message: "A categoria do produto não existe!" })
+
+        if (!await this.#repoProduto.CadastrarProduto(entidade))
+            return res.status(201).json({ message: "Erro ao cadastrar produto!" })
+
+        return res.status(201).json({ message: "Produto cadastrado com sucesso!" })  
     }
 
     async AlterarProduto(req, res) {
