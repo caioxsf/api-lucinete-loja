@@ -158,44 +158,11 @@ Há dependências de teste (jest, supertest) no package.json. Para habilitar o s
 npm set-script test "jest"
 npm run test
 
-
 ---
 
 #### ⚙️ Scripts npm
 
 - start: executa o swagger.js (gera Swagger e sobe o servidor)
 - swagger: gera/atualiza o swagger-output.json
-
----
-
-#### 🛟 Troubleshooting
-
-- Se as rotas não aparecem no Swagger, rode novamente `npm run swagger` para regenerar o arquivo.
-- Confirme variáveis do .env e conectividade com o MySQL.
-- Verifique logs do servidor no terminal para mensagens de erro.
-
----
-
-#### 🗺️ Roadmap (sugestões)
-
-- Testes de integração com supertest
-- CI com GitHub Actions (lint/test/build)
-- Migrations para o banco (ex.: Sequelize/Knex)
-- Rate limiting e logs estruturados
-- Padronização de erros e respostas (error handler global)
-
----
-
-#### 🙌 Contribuição
-
-- Abra uma issue com detalhes do bug/feature
-- Faça um fork, crie uma branch, e abra um PR
-- Mantenha o padrão de código e atualize a documentação/Swagger quando necessário
-
----
-
-#### 📄 Licença
-
-ISC (veja o package.json). Ajuste conforme a necessidade do projeto.
 
 ---
