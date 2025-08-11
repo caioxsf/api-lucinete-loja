@@ -21,31 +21,6 @@ Depois de subir a API, acesse: http://localhost:3001/docs
 
 ---
 
-#### 🗂️ Estrutura do projeto
-
-api-lucinete-loja/
-├─ controllers/ # Lógica de negócio por recurso
-├─ repositories/ # Acesso ao banco (queries)
-├─ entities/ # Modelagem/entidades
-├─ routes/ # Definição das rotas (Express)
-├─ middlewares/ # Middlewares (ex.: auth)
-├─ utils/bcrypt/ # Utilitários de hash
-├─ db/ # (scripts auxiliares, se houver)
-├─ swagger.js # Geração do swagger-output.json
-├─ swagger-output.json # Esquema gerado do Swagger
-├─ server.js # Bootstrap do servidor e rotas
-├─ Dockerfile
-├─ package.json
-├─ .env.example # (recomendado criar)
-└─ banco.txt # Script/notes do banco (SQL)
-
-
-Rotas registradas em server.js: UsuarioRoute, ProdutoRoute, VendaRoute, AuthRoute, CategoriaRoute, RelatorioRoute, CarrinhoRoute (todas montadas em "/"). A documentação fica em "/docs".
-
-Observação: a porta está fixa em 3001 no server.js.
-
----
-
 #### 📦 Pré-requisitos
 
 - Node.js 18+ e npm
